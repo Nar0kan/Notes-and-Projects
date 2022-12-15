@@ -6,41 +6,43 @@ class BubbleSort(Sort):
         super().__init__(*args)
     
 
-    def sortNumbers(self) -> None:
+    def sortNumbers(self, order: str='ascending') -> None:
         for j in range(self.amount):
-            swapped = False
+            swap = False
 
             for i in range(self.amount-j-1):
                 if self.DATA[i] > self.DATA[i+1]:
                     self.DATA[i], self.DATA[i+1] = self.DATA[i+1], self.DATA[i]
-                    swapped = True
+                    swap = True
             
-            if not swapped:
+            if not swap:
                 break
+        
+        if order == 'descending':
+            self.DATA=self.DATA[::-1]
 
 
-    def sortLetters(self) -> None:
+    def sortSymbols(self, order: str='ascending') -> None:
         for j in range(self.amount):
-            swapped = False
+            swap = False
 
             for i in range(self.amount-j-1):
                 if ord(self.DATA[i]) > ord(self.DATA[i+1]):
                     self.DATA[i], self.DATA[i+1] = self.DATA[i+1], self.DATA[i]
-                    swapped = True
+                    swap = True
             
-            if not swapped:
+            if not swap:
                 break
-            
-
-    def sortAll(self) -> None:
-        pass
+        
+        if order == 'descending':
+            self.DATA=self.DATA[::-1]
 
 
 def main() -> None:
     OBJ = BubbleSort()
-    OBJ.createFile(symbols='letters')
+    OBJ.createFile(symbols='all')
     OBJ.readFile()
-    OBJ.sortLetters()
+    OBJ.sortSymbols(order='descending')
     OBJ.writeFile()
 
 
