@@ -15,7 +15,11 @@ class HeapSort(Sort):
 
 
 def main():
-    pass
+    OBJ = HeapSort()
+    OBJ.createFile(symbols='numbers')
+    OBJ.readFile()
+    OBJ.sortNumbers()
+    OBJ.writeFile()
 
 
 if __name__ == '__main__':

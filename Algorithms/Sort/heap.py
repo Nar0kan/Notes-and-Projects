@@ -1,7 +1,7 @@
 from createInput import Sort
 
 
-class InsertionSort(Sort):
+class HeapSort(Sort):
     def __init__(self, *args) -> None:
         super().__init__(*args)
  

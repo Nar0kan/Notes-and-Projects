@@ -16,8 +16,7 @@ class SelectionSort(Sort):
             
             self.DATA[i], self.DATA[min] = self.DATA[min], self.DATA[i]
         
-        if order == 'descending':
-            self.DATA = self.DATA[::-1]
+        return self.DATA if order == 'ascending' else self.DATA[::-1]
 
 
     def sortSymbols(self, order: str='ascending') -> None:
@@ -28,10 +27,9 @@ class SelectionSort(Sort):
                 if ord(self.DATA[min]) > ord(self.DATA[j]):
                     min = j
             
-            self.DATA[i], self.DATA[min] = self.DATA[min], self.DATA[i]
+        self.DATA[i], self.DATA[min] = self.DATA[min], self.DATA[i]
         
-        if order == 'descending':
-            self.DATA = self.DATA[::-1]
+        return self.DATA if order == 'ascending' else self.DATA[::-1]
 
 
 def main():
