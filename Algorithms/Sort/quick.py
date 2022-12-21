@@ -6,7 +6,8 @@ class QuickSort(Sort):
         super().__init__(*args)
  
 
-    def partitionNumbers(self, data, left, right) -> int:
+    @staticmethod
+    def partitionNumbers(data, left, right) -> int:
         pivot = data[right]
         i = left - 1
 
@@ -20,7 +21,8 @@ class QuickSort(Sort):
         return i + 1
     
 
-    def partitionSymbols(self, data, left, right) -> int:
+    @staticmethod
+    def partitionSymbols(data, left, right) -> int:
         pivot = ord(data[right])
         i = left - 1
 
@@ -36,23 +38,25 @@ class QuickSort(Sort):
 
     def sortNumbers(self, order: str='ascending', left: int=0, right: int=0) -> None:
         if left < right:
-            pivot = self.partitionNumbers(self.DATA, left, right)
+            pivot = QuickSort.partitionNumbers(self.DATA, left, right)
             self.sortNumbers(self.DATA, left, pivot-1)
             self.sortNumbers(self.DATA, pivot+1, right)
 
-        return self.DATA if order == 'ascending' else self.DATA[::-1]
+        if order == 'descending':
+            self.DATA = self.DATA[::-1]
 
 
     def sortSymbols(self, order: str='ascending', left: int=0, right: int=0) -> None:
         if left < right:
-            pivot = self.partitionSymbols(self.DATA, left, right)
+            pivot = QuickSort.partitionSymbols(self.DATA, left, right)
             self.sortSymbols(self.DATA, left, pivot-1)
             self.sortSymbols(self.DATA, pivot+1, right)
 
-        return self.DATA if order == 'ascending' else self.DATA[::-1]
+        if order == 'descending':
+            self.DATA = self.DATA[::-1]
 
 
-def main():
+def main() -> None:
     OBJ = QuickSort()
     OBJ.createFile(symbols='all')
     OBJ.readFile()

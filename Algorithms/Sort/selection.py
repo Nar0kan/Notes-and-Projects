@@ -16,7 +16,8 @@ class SelectionSort(Sort):
             
             self.DATA[i], self.DATA[min] = self.DATA[min], self.DATA[i]
         
-        return self.DATA if order == 'ascending' else self.DATA[::-1]
+        if order == 'descending':
+            self.DATA = self.DATA[::-1]
 
 
     def sortSymbols(self, order: str='ascending') -> None:
@@ -27,16 +28,17 @@ class SelectionSort(Sort):
                 if ord(self.DATA[min]) > ord(self.DATA[j]):
                     min = j
             
-        self.DATA[i], self.DATA[min] = self.DATA[min], self.DATA[i]
+            self.DATA[i], self.DATA[min] = self.DATA[min], self.DATA[i]
         
-        return self.DATA if order == 'ascending' else self.DATA[::-1]
+        if order == 'descending':
+            self.DATA = self.DATA[::-1]
 
 
-def main():
+def main() -> None:
     OBJ = SelectionSort()
     OBJ.createFile(symbols='all')
     OBJ.readFile()
-    OBJ.sortSymbols(order='ascending')
+    OBJ.sortSymbols(order='descending')
     OBJ.writeFile()
 
 

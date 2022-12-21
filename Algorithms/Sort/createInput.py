@@ -7,14 +7,14 @@ class Sort:
         return None
     
 
-    def createFile(self, filename: str='input.txt', symbols: str='numbers') -> None:
+    def createFile(self, filename: str='input.txt', symbols: str='numbers', amount: int=512) -> None:
         self.filename = filename
-        self.amount=512
+        self.amount = amount
         self.symbols = symbols
 
         if symbols == "numbers":
-            self.from_=-5096
-            self.to=5096
+            self.from_ = -10192
+            self.to = 10192
             SEPARATOR = ', '
             DATA = SEPARATOR.join([str(randint(self.from_, self.to)) for i in range(self.amount)])
         elif symbols == "letters":
