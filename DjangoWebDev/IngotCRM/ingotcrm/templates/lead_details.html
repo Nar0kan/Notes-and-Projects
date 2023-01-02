@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IngotCRM</title>
+    <style>
+      .lead {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 6px;
+        padding-right: 6 px;
+        margin-top: 10px;
+        background-color: #f6f6f6;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/leads">Go back to leads list</a>
+    <hr/>
+    <h2>This is the details of {{ lead.first_name }}</h2>
+    <p>This persons age: {{ lead.age }}</p>
+  </body>
+</html>
