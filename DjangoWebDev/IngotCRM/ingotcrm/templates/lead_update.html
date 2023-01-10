@@ -1,11 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <a href="{% url 'leads:lead-detail' lead.pk %}">Go back</a>
-    <hr/>
-    <h2>Update lead: {{ lead.first_name }} {{ lead.last_name }}</h2>
+    <h1 class="sm:text-3xl text-2xl font-medium mb-1 text-gray-900">
+    Update lead
+    </h1>
+    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
+    <b/>{{ lead.first_name }} {{ lead.last_name }}
+    </h1>
+    <br/><hr/>
+
+    <div class="mx-center mt-5 relative flex-grow w-full">
+      <div class="keys" style="position: absolute; left: auto; width: 100px; height: 120px;">
+        <label for="first-name" class="leading-10 text-sm text-gray-600">First Name</label>
+        <label for="last-name" class="leading-10 text-sm text-gray-600">Last Name</label><br/>
+        <label for="age" class="leading-10 text-sm text-gray-600">Age</label><br/>
+        <label for="email" class="leading-10 text-sm text-gray-600">Agent</label>
+      </div>
+      <div class="values" style="position: absolute; left: 150px; width: 200px; height: 120px;">
+        <input type="text" id="first_name" name="first-name" class="w-50 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-transparent focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" value="{{ lead.first_name }}">
+        <input type="text" id="last_name" name="last-name" class="w-50 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-transparent focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" value="{{ lead.last_name }}">
+        <input type="int" id="age" name="age" class="w-50 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-transparent focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" value="{{ lead.age }}">
+        <input type="email" id="Agent" name="email" class="w-50 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-transparent focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" value="{{ lead.agent }}">
+      </div>
+      <button type="submit" class="flex mx-auto mt-10 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Submit</button>
+    </div>
+    <br/><br/><br/><br/><br/><br/><br/><br/>
+    
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit">Submit</button>
+    
 {% endblock content %}

@@ -1,12 +1,24 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-    <a href="{% url 'leads:lead-create' %}">Create a new lead</a>
-    </hr>
-    <h2>Lead list</h2>
-    {% for lead in leads %}
-      <div class="lead">
-        <a href="{% url 'leads:lead-detail' lead.pk %}"> {{ lead.first_name }} {{ lead.last_name }} </a>. Age: {{ lead.age }}
-      </div>
-    {% endfor %}
+  <a  href="{% url 'leads:lead-create' %}"><button class="inline-flex text-white bg-sky-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg"></h1>Create a new Lead</h1></button></a>
+
+    <ul role="list" class="p-6 divide-y divide-slate-200">
+      {% for lead in leads %}
+        <!-- Remove top/bottom padding when first/last child -->
+        <li class="flex py-4 first:pt-0 last:pb-0">
+          <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
+          <div class="ml-3 overflow-hidden">
+            <p class="text-sm font-medium text-slate-900">
+            <a href="{% url 'leads:lead-detail' lead.pk %}">
+            <h3>{{ lead.first_name }} {{ lead.last_name }}</h3></a>
+            </p>
+            <p class="text-sm text-slate-500 truncate"></p>
+          </div>
+        </li>
+        </hr>
+      {% endfor %}
+    </ul>
+    
 {% endblock content %}
