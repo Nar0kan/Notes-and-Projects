@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="sm:text-3xl text-2xl font-medium mb-1 text-gray-900">Are you sure you want to delete '{{ lead.first_name }} {{ lead.last_name }}' lead?</h1>
+  <br/><hr/>
+  <div class="flex mx-auto mt-5 relative flex-grow w-full">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+        <button type="submit" class="mt-6 mr-5 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Submit</button>
+        <a href="{% url 'leads:lead-list' %}"><button type="button" class="mt-6 text-white bg-yellow-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">Cancel</button></a>
+      </div>
+      </form>
+{% endblock content %}
