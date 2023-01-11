@@ -4,7 +4,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-12 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
       </svg>
-      <span class="ml-3 hover:text-green-900 text-xl" href="{% url 'landing-page' %}">Ingot CRM</span>
+      <a href="{% url 'landing-page' %}"><span class="ml-3 hover:text-green-900 text-xl">Ingot CRM</span></a>
     </a>
     <nav class="md:mr-auto md:ml-8 md:py-4 md:pl-4 md:border-l md:border-green-400	flex flex-wrap items-center text-base justify-center">
       <a class="mr-5 hover:text-green-900" href="{% url 'leads:lead-list' %}">Leads</a>
@@ -12,10 +12,18 @@
       <a class="mr-5 hover:text-blue-900">Third Link</a>
       <a class="mr-5 hover:text-red-900">Fourth Link</a>
     </nav>
-    <a href="https://github.com/Nar0kan/Notes-and-Projects/tree/main/DjangoWebDev/IngotCRM"><button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Source code</a>
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
+    <div class="flex space-x-2 justify-center">
+      {% if request.user.is_authenticated %}
+        <h5 class="inline-block mt-4 ml-5">Logged in as {{ request.user.username }}<h5>
+        <a href="{% url 'logout' %}"><button type="button" class="inline-block mt-2 mr-2 px-6 py-2 border-2 border-green-800 text-black-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Log out</button></a>
+      {% else %}
+        <a href="{% url 'register' %}"><button type="button" class="inline-block px-6 py-2 border-2 border-gray-800 text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Register</button></a>
+        <a href="{% url 'login' %}"><button type="button" class="inline-block px-6 py-2 border-2 border-green-800 text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Log in</button></a>
+      {% endif %}
+      <a href="https://github.com/Nar0kan/Notes-and-Projects/tree/main/DjangoWebDev/IngotCRM"><button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Source code
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
+          <path d="M5 12h14M12 5l7 7-7 7"></path>
+        </svg></button></a>
+    </div>
   </div>
 </header>
