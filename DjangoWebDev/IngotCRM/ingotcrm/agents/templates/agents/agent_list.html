@@ -14,11 +14,12 @@
     <ul role="list" class="p-6 divide-y divide-slate-200">
         {% for agent in agents %}
         <li class="flex py-4 first:pt-0 last:pb-0">
-            <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
+            <a href="{% url 'agents:agent-detail' agent.pk %}"><img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/></a>
             <div class="ml-3 overflow-hidden">
-            <p class="text-sm font-medium text-slate-900">
-                <h3>{{ agent.user.username }}</h3>
-            </p>
+            <a href="{% url 'agents:agent-detail' agent.pk %}">
+                <p class="text-sm font-medium text-slate-900">
+                    <h3>{{ agent.user.username }}</h3>
+                </p></a>
             <p class="text-sm text-slate-500 truncate"></p>
             </div>
         </li>
