@@ -13,6 +13,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('register/', SignupView.as_view(), name='register'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('agents/', include('agents.urls', namespace='agents')),
 
 ]
 

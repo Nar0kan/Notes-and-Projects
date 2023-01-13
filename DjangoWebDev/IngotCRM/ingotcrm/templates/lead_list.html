@@ -11,24 +11,24 @@
     </div>
   </div>
 
-    <ul role="list" class="p-6 divide-y divide-slate-200">
-      {% for lead in leads %}
-        <!-- Remove top/bottom padding when first/last child -->
-        <li class="flex py-4 first:pt-0 last:pb-0">
-          <a href="{% url 'leads:lead-detail' lead.pk %}">
-            <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
-          </a>
-          <div class="ml-3 overflow-hidden">
-            <p class="text-sm font-medium text-slate-900">
-              <a href="{% url 'leads:lead-detail' lead.pk %}">
-                <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
-              </a>
-            </p>
-            <p class="text-sm text-slate-500 truncate"></p>
-          </div>
-        </li>
-        </hr>
-      {% endfor %}
-    </ul>
+  <ul role="list" class="p-6 divide-y divide-slate-200">
+    {% for lead in leads %}
+      <!-- Remove top/bottom padding when first/last child -->
+      <li class="flex py-4 first:pt-0 last:pb-0">
+        <a href="{% url 'leads:lead-detail' lead.pk %}">
+          <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
+        </a>
+        <div class="ml-3 overflow-hidden">
+          <p class="text-sm font-medium text-slate-900">
+            <a href="{% url 'leads:lead-detail' lead.pk %}">
+              <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
+            </a>
+          </p>
+          <p class="text-sm text-slate-500 truncate"></p>
+        </div>
+      </li>
+      </hr>
+    {% endfor %}
+  </ul>
     
 {% endblock content %}

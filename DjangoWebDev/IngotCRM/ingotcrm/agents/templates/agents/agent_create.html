@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1 class="sm:text-3xl text-2xl font-medium mb-1 text-gray-900">Create a new agent</h1>
+    <br/><hr/>
+    
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Submit</button>
+{% endblock content %}
