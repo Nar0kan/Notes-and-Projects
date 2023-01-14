@@ -4,7 +4,8 @@ from django.db.models.signals import post_save
 
 
 class User(AbstractUser):
-    pass
+    is_organisor = models.BooleanField(default=True)
+    is_agent = models.BooleanField(default=False)
 
 
 class UserProfile(models.Model):
@@ -19,8 +20,9 @@ class Lead(models.Model):
     last_name = models.CharField(max_length=28)
     age = models.IntegerField(default=0)
 
-    agent = models.ForeignKey("Agent", on_delete=models.CASCADE)    # Every lead has an agent
-    
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)    # Every lead has an agent
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
