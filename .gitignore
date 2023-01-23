@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 DjangoWebDev/IngotForum/Forum/token.txt
+DjangoWebDev/IngotCRM/ingotcrm/token.txt
