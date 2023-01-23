@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if profile %}
+<div class="container text-center p-2">
+    <div class="row">
+        <div class="col-8">
+            <h1> {{ profile.user.username }} </h1>
+        </div>
+    
+        <div class="col-4">
+
+        <div class="card border-info mb-2 border-opacity-50" style="max-width: 12rem;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a class="btn btn-outline-info" data-bs-toggle="collapse" href="#multiCollapse1" role="button" aria-expanded="false" aria-controls="multiCollapse1">
+                    <strong> Follows | {{ profile.follows.count }}</strong>
+                    </a><br/>
+                </h5>
+
+                <div class="collapse multi-collapse" id="multiCollapse1">
+                    <div class="card card-body border-secondary text">
+                    <p class="card-text">
+                    {% for follower in profile.follows.all %}
+                        <a href='{% url "profile" follower.user.id %}'>@{{ follower }} </a><br/>
+                    {% endfor %}
+                    </p>
+                    </div>
+                </div>
+                <h5 class="card-title">
+                    <br/>
+                    <a class="btn btn-outline-info" data-bs-toggle="collapse" href="#multiCollapse2" role="button" aria-expanded="false" aria-controls="multiCollapse2">
+                    <strong> Followed by | {{ profile.followed_by.count }}</strong>
+                    </a>
+                </h5>
+                <div class="collapse multi-collapse" id="multiCollapse2">
+                    <div class="card card-body border-secondary text">
+                        <p class="card-text">
+                        {% for follower in profile.followed_by.all %}
+                            <a href='{% url "profile" follower.user.id %}'> @{{ follower }} </a><br/>
+                        {% endfor %}
+                        </p>
+                    </div>
+                </div>
+                </div>
+                <div class="card card-body border-secondary text">
+                    <form method=POST>
+                        {% csrf_token %}
+                        {% if profile in user.profile.follows.all %}
+                            <button class="btn btn-outline-danger" name="follow" value="unfollow" type="submit">
+                            Unfollow @{{ profile.user.username|lower }}
+                            </button>
+                        {% else %}
+                            <button class="btn btn-outline-success" name="follow" value="follow" type="submit">
+                            Follow @{{ profile.user.username|lower }}
+                            </button>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>      
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -5,7 +5,7 @@
   <div class="flex ml-5 space-x-2 justify-left">
     <div>
     {% if request.user.is_organisor %}
-      <a  href="{% url 'leads:lead-create' %}"><button type="button" class="inline-block px-6 pt-2.5 pb-2 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex align-center">
+      <a  href="{% url 'leads:lead-create' %}"><button type="button" class="inline-block px-6 pt-2 mt-6 pb-2 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex align-center">
         <img class="flex mx-auto mr-5 mt-0.5 w-3" src="http://cdn.onlinewebfonts.com/svg/img_28248.png" viewBox="0 0 512 512">
         Add a new Lead
       </button></a>
@@ -15,22 +15,46 @@
 
   <ul role="list" class="p-6 divide-y divide-slate-200">
     {% for lead in leads %}
-      <!-- Remove top/bottom padding when first/last child -->
-      <li class="flex py-4 first:pt-0 last:pb-0">
-        <a href="{% url 'leads:lead-detail' lead.pk %}">
-          <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
-        </a>
-        <div class="ml-3 overflow-hidden">
-          <p class="text-sm font-medium text-slate-900">
-            <a href="{% url 'leads:lead-detail' lead.pk %}">
-              <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
-            </a>
-          </p>
-          <p class="text-sm text-slate-500 truncate"></p>
-        </div>
-      </li>
-      </hr>
+    <!-- Remove top/bottom padding when first/last child -->
+    <li class="flex py-4 first:pt-0 last:pb-0">
+      <a href="{% url 'leads:lead-detail' lead.pk %}">
+        <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
+      </a>
+      <div class="ml-3 overflow-hidden">
+        <p class="text-sm font-medium text-slate-900">
+          <a href="{% url 'leads:lead-detail' lead.pk %}">
+            <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
+          </a>
+        </p>
+        <p class="text-sm text-slate-500 truncate"></p>
+      </div>
+    </li>
     {% endfor %}
   </ul>
+  <br/>
+  {% if unassigned_leads.exists %}
+    <h1 class="text-sm font-medium flex justify-center">Unassigned leads</h1>
+      <ul role="list" class="p-6 divide-y divide-slate-200">
+      {% for lead in unassigned_leads %}
+        <!-- Remove top/bottom padding when first/last child -->
+        <li class="flex py-4 first:pt-0 last:pb-0">
+          <a href="{% url 'leads:lead-detail' lead.pk %}">
+            <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
+          </a>
+          <div class="ml-3 overflow-hidden">
+            <p class="text-sm font-medium text-slate-900">
+              <a href="{% url 'leads:lead-detail' lead.pk %}">
+                <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
+              </a>
+            </p>
+            <a href="{% url 'leads:assign-agent' lead.pk %}"><p class="text-sm text-slate-500 truncate"> Assign to an agent -> </p></a>
+          </div>
+        </li>
+        </hr>
+      </ul>
+      <br/>
+      {% endfor %}
+  {% endif %}
+  
     
 {% endblock content %}
