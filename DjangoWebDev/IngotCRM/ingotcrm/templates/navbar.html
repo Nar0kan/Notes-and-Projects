@@ -12,8 +12,7 @@
         {% if request.user.is_organisor %}
           <a class="mr-5 hover:text-yellow-900" href="{% url 'agents:agent-list' %}">Agents</a>
         {% endif %}
-        <a class="mr-5 hover:text-blue-900">Third Link</a>
-        <a class="mr-5 hover:text-red-900">Fourth Link</a>
+        <a class="mr-5 hover:text-blue-900" href="{% url 'leads:category-list' %}">Categories</a>
       </nav>
       <div class="flex space-x-2 justify-center">
         
