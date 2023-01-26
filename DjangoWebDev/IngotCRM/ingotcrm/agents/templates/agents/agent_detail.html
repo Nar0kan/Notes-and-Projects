@@ -28,9 +28,10 @@
             <br/><hr class="border-2 border-amber-500 hover:border-purple-500 drop-shadow-xl"/><br/>
           </p>
           <br/><br/>
-          <a class="text-green-500 inline-flex items-center">
+          <p class="text-green-500 inline-flex items-center">
             <a href="{% url 'agents:agent-update' agent.pk %}"><button class="flex mx-auto ml-8 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg align-center" style="display: block; float: left;"> Update </button></a>
             <a href="{% url 'agents:agent-delete' agent.pk %}"><button class="flex mx-auto text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg align-center" style="display: block; float: left; margin-left: 20px;"> Delete </button></a>
+          </p>
         </div>
       </div>
     </div>

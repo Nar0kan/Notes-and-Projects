@@ -69,7 +69,7 @@ class AgentUpdateView(OrganisorRequiredMixin, generic.UpdateView):
         return reverse("agents:agent-detail")
     
 
-class AgentDeleteView(OrganisorRequiredMixin, generic.UpdateView):
+class AgentDeleteView(OrganisorRequiredMixin, generic.DeleteView):
     template_name = "agents/agent_delete.html"
     context_object_name = "agent"
     form_class = AgentModelForm
