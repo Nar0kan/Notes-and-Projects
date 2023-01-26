@@ -8,6 +8,22 @@
         <div class="col-8">
             <h1> {{ profile.user.username }} </h1>
         </div>
+
+        <div class="col-8">
+            <br/><br/>
+            {% if ingnotes.exists %}
+                {% for ingnote in ingnotes %}
+                    <a class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1"></h5>
+                            <small class="text-muted">{{ ingnote.create_time }}</small>
+                        </div>
+                        <p class="mb-1">{{ ingnote.body }}</p>
+                        <small class="text-muted">@{{ ingnote.user }}</small>
+                    </a><br/>
+                {% endfor %}
+            {% endif %}
+        </div>
     
         <div class="col-4">
 

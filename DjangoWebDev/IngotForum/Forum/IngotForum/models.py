@@ -4,6 +4,16 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+class IngNote(models.Model):
+    user = models.ForeignKey(User, related_name="ingnote", on_delete=models.DO_NOTHING)
+    body = models.CharField(max_length=1000)
+    create_time = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return (f"{self.user} | {self.create_time:%Y-%m-%d %H:%M} | {self.body}")
+
+
 # Create a User profile model
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

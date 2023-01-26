@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Profile
+from .models import Profile, IngNote
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html', {})
+    if request.user.is_authenticated:
+        ingnotes = IngNote.objects.all().order_by("-create_time")
+        return render(request, 'home.html', {"ingnotes": ingnotes})
+    else:
+        return render(request, 'home.html')
 
 
 def profile_list(request):
@@ -20,6 +24,7 @@ def profile_list(request):
 def profile(request, pk):
     if request.user.is_authenticated:
         profile = Profile.objects.get(user_id=pk)
+        ingnotes = IngNote.objects.filter(user_id=pk).order_by("-create_time")
 
         if request.method == "POST":
             request_user = request.user.profile
@@ -32,7 +37,7 @@ def profile(request, pk):
             
             request_user.save()
 
-        return render(request, "profile.html", {"profile": profile})
+        return render(request, "profile.html", {"profile": profile, "ingnotes": ingnotes})
     else:
         messages.success(request, ('You must be logged in to see this profile information.'))
         return render(request, 'home.html')
