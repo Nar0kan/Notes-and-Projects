@@ -1,12 +1,13 @@
 <header class="text-white-500 body-font">
-  <div class="container bg-cyan-100 mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+  
+  <div class="container bg-cyan-100 mx-auto flex justify-left p-5 flex-col md:flex-row items-center">
     <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
       <a href="{% url 'landing-page' %}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-12 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
       </svg></a>
       <a href="{% url 'landing-page' %}"><span class="ml-3 mr-3 hover:text-green-900 text-xl">Ingot CRM</span></a>
     </a>
-      {% if request.user.is_authenticated %}
+    {% if request.user.is_authenticated %}
       <nav class="md:mr-auto md:ml-8 md:py-4 md:pl-4 md:border-l md:border-green-400	flex flex-wrap items-center text-base justify-center">
         <a class="mr-5 hover:text-green-900" href="{% url 'leads:lead-list' %}">Leads</a>
         {% if request.user.is_organisor %}
@@ -19,6 +20,7 @@
         <h5 class="inline-block mt-4 ml-5">Logged in as {{ request.user.username }}<h5>
         <a href="{% url 'logout' %}"><button type="button" class="inline-block mt-2 mr-2 px-6 py-2 border-2 border-green-800 text-black-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Log out</button></a>
       {% else %}
+      <div class="flex  space-x-2 justify-right">
         <a href="{% url 'register' %}"><button type="button" class="inline-block mr-8 mr-2 px-6 py-2 border-2 border-gray-800 text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Register</button></a>
         <a href="{% url 'login' %}"><button type="button" class="inline-block mr-2 px-6 py-2 border-2 border-green-800 text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">Log in</button></a>
       {% endif %}

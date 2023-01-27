@@ -17,7 +17,7 @@
             <h2 class="font-medium title-font mt-4 text-gray-900 text-lg">{{ lead.first_name }} {{ lead.last_name }}</h2>
             <div class="w-12 h-1 bg-green-500 rounded mt-2 mb-3"></div>
             <p class="text-base">
-                Short info about profile and the role in the company.
+                {{ lead.description }}
             </p>
           </div>
         </div>
@@ -27,7 +27,9 @@
             <br/><hr class="border-2 border-amber-500 hover:border-purple-500 drop-shadow-xl"/><br/>
               <div class="flex mx-auto ml-2">
                 Age: {{ lead.age }}<br/>
-                E-mail: {{ lead.agent }}<br/>
+                E-mail: {{ lead.email }}<br/>
+                Agent: {{ lead.agent }}<br/>
+                Date added: {{ lead.date_added }}<br/>
               </div>
           </p>
           <br/><br/>
