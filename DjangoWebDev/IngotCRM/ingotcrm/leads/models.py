@@ -28,7 +28,6 @@ class Lead(models.Model):
     agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)    # Every lead has an agent
     category = models.ForeignKey("Category", related_name="lead_cat", null=True, blank=True, on_delete=models.SET_NULL)
 
-
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -44,6 +43,18 @@ class Agent(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=50)
     organisation = models.ForeignKey(UserProfile, on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class Document(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+    description = models.TextField()
+    is_secret = models.BooleanField(default=False)
+
+    lead = models.ForeignKey("Lead", null=True, blank=True, on_delete=models.SET_NULL)
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

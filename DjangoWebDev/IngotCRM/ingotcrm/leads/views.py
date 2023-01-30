@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect, reverse
 from django.core.mail import send_mail
 from django.http import HttpResponse
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
+from django.views.generic import (
+    TemplateView, ListView, DetailView, 
+    CreateView, DeleteView, UpdateView, FormView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Lead, Agent, Category
-from .forms import LeadForm, LeadModelForm, CustomUserCreationForm, AssignAgentForm, LeadCategoryUpdateForm
-
+from .models import Lead, Agent, Category, Document
+from .forms import (
+    LeadForm, LeadModelForm,
+    CustomUserCreationForm, AssignAgentForm,
+    LeadCategoryUpdateForm, UploadDocumentModelForm)
 from agents.mixins import OrganisorRequiredMixin
 
 
@@ -196,6 +200,38 @@ class SignupView(CreateView):
 
     def get_success_url(self) -> str:
         return reverse("login")
+
+
+class DocumentListView(LoginRequiredMixin, ListView):
+    template_name = "document_list.html"
+    context_object_name = "documents"
+    
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_organisor:
+            queryset = Document.objects.filter(organisation=user.userprofile)
+        else:
+            queryset = Document.objects.filter(organisation=user.agent.organisation, is_secret=False)
+        
+        return queryset
+
+
+class DocumentDetailView(LoginRequiredMixin, DetailView):
+    template_name = "document_detail.html"
+    queryset = Document.objects.all()
+    context_object_name = "document"
+
+
+class DocumentUploadView(OrganisorRequiredMixin, CreateView):
+    template_name = "upload_document.html"
+    form_class = UploadDocumentModelForm
+
+    def get_success_url(self) -> str:
+        return reverse("leads:document-list")
+    
+    def form_valid(self, form):
+        return super(DocumentUploadView, self).form_valid(form)
 
 
 # def  landing_page(request):

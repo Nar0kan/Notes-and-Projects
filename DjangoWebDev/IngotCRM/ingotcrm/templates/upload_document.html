@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+
+{% block content %}
+<br/><br/>
+<h1 class="sm:text-3xl text-2xl font-medium mb-1 text-gray-900">Upload a new document</h1>
+  <br/><hr/>
+
+<div class="flex justify-center max-w-lg mx-auto align-center mt-10">
+  <form action="{% url 'leads:document-upload' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_f }}
+    <button type="submit" class="flex mx-auto mt-10 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-cyan-500 hover:text-black rounded text-lg" value="Upload">Submit</button>
+    <br/>
+  </form>
+</div>
+{% endblock content %}

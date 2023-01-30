@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lead, User, Agent
+from .models import Lead, User, Agent, Document
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 
 
@@ -46,3 +46,14 @@ class LeadCategoryUpdateForm(forms.ModelForm):
         fields = (
             'category',
         )
+
+
+class UploadDocumentModelForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        file = forms.FileField()
+        fields = (
+            'name',
+            'description',
+            'is_secret',
+            )

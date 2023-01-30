@@ -9,6 +9,9 @@ from .views import (
     CategoryListView,
     CategoryDetailView,
     LeadCategoryUpdateView,
+    DocumentListView,
+    DocumentDetailView,
+    DocumentUploadView,
     )
 
 app_name = "leads"
@@ -23,4 +26,7 @@ urlpatterns = [
     path('categories/', CategoryListView.as_view(), name='category-list'),
     path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category-detail'),
     path('<int:pk>/category/', LeadCategoryUpdateView.as_view(), name='lead-category-update'),
+    path('documents/', DocumentListView.as_view(), name='document-list'),
+    path('documents/<int:pk>/', DocumentDetailView.as_view(), name='document-detail'),
+    path('upload_document/', DocumentUploadView.as_view(), name='document-upload'),
 ]
