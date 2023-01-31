@@ -52,6 +52,7 @@ class Document(models.Model):
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField()
     is_secret = models.BooleanField(default=False)
+    file = models.FileField(null=False, blank=False, upload_to="media/")
 
     lead = models.ForeignKey("Lead", null=True, blank=True, on_delete=models.SET_NULL)
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

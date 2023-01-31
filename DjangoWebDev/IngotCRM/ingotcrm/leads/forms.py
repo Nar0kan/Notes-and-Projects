@@ -51,9 +51,11 @@ class LeadCategoryUpdateForm(forms.ModelForm):
 class UploadDocumentModelForm(forms.ModelForm):
     class Meta:
         model = Document
-        file = forms.FileField()
         fields = (
+            'lead',
+            'organisation',
             'name',
             'description',
             'is_secret',
+            'file',
             )
