@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.core.mail import send_mail
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
 from django.views.generic import (
     TemplateView, ListView, DetailView, 
@@ -12,6 +13,9 @@ from .forms import (
     CustomUserCreationForm, AssignAgentForm,
     LeadCategoryUpdateForm, UploadDocumentModelForm)
 from agents.mixins import OrganisorRequiredMixin
+
+
+DOCUMENTS_PER_PAGE = 1
 
 
 class LandingPageView(TemplateView):
@@ -205,6 +209,7 @@ class SignupView(CreateView):
 class DocumentListView(LoginRequiredMixin, ListView):
     template_name = "document_list.html"
     context_object_name = "documents"
+    paginate_by = 1
     
     def get_queryset(self):
         user = self.request.user
@@ -233,6 +238,20 @@ class DocumentUploadView(OrganisorRequiredMixin, CreateView):
     def form_valid(self, form):
         return super(DocumentUploadView, self).form_valid(form)
 
+
+def listDocuments(request):
+    document = Document.objects.all()
+
+    page = request.GET.get('page', 1)
+    documents_paginator = Paginator(document, DOCUMENTS_PER_PAGE)
+
+    try:
+        document = documents_paginator.page(page)
+    except EmptyPage:
+        document = documents_paginator.page(documents_paginator.num_pages)
+    except:
+        document = documents_paginator.page(DOCUMENTS_PER_PAGE)
+    return render(request, "document_list.html", {"documents": document, "page_obj": document, "is_paginated":True, "paginator":documents_paginator})
 
 # def  landing_page(request):
 #     return render(request, 'landing.html')
