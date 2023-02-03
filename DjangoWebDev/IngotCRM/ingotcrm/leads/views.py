@@ -15,7 +15,7 @@ from .forms import (
 from agents.mixins import OrganisorRequiredMixin
 
 
-DOCUMENTS_PER_PAGE = 1
+DOCUMENTS_PER_PAGE = 2
 
 
 class LandingPageView(TemplateView):
@@ -209,7 +209,7 @@ class SignupView(CreateView):
 class DocumentListView(LoginRequiredMixin, ListView):
     template_name = "document_list.html"
     context_object_name = "documents"
-    paginate_by = 1
+    paginate_by = DOCUMENTS_PER_PAGE
     
     def get_queryset(self):
         user = self.request.user
@@ -242,6 +242,11 @@ class DocumentUploadView(OrganisorRequiredMixin, CreateView):
 def listDocuments(request):
     document = Document.objects.all()
 
+    ordering = request.GET.get('ordering', "")
+
+    if ordering:
+        document = document.order_by(ordering)
+
     page = request.GET.get('page', 1)
     documents_paginator = Paginator(document, DOCUMENTS_PER_PAGE)
 
@@ -251,7 +256,11 @@ def listDocuments(request):
         document = documents_paginator.page(documents_paginator.num_pages)
     except:
         document = documents_paginator.page(DOCUMENTS_PER_PAGE)
+
     return render(request, "document_list.html", {"documents": document, "page_obj": document, "is_paginated":True, "paginator":documents_paginator})
+
+
+
 
 # def  landing_page(request):
 #     return render(request, 'landing.html')

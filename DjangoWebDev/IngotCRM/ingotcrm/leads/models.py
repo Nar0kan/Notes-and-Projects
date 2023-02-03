@@ -53,9 +53,13 @@ class Document(models.Model):
     description = models.TextField()
     is_secret = models.BooleanField(default=False)
     file = models.FileField(null=False, blank=False, upload_to="media/")
+    date_added = models.DateTimeField(auto_now_add=True)
 
     lead = models.ForeignKey("Lead", null=True, blank=True, on_delete=models.SET_NULL)
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-date_added']
 
     def __str__(self):
         return self.name
