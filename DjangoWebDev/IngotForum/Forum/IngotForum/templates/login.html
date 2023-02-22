@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div align="center"><h1>What are you even doing here?XD</h1></div>
+{% else %}
+<div align="center" class="position-absolute top-50 start-50 translate-middle mw-50 p-3">
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+      <!-- Email input -->
+      <div class="form-outline mb-4">
+        <input type="text" id="username" name="username" class="form-control" />
+        <label class="form-label" for="username">
+            Username
+        </label>
+      </div>
+
+      <!-- Password input -->
+      <div class="form-outline mb-4">
+        <input type="password" id="password" name="password" class="form-control col-xs-2" />
+        <label class="form-label" for="password">
+            Password
+        </label>
+      </div>
+
+      <!-- 2 column grid layout for inline styling -->
+      <div class="row mb-4">
+        <div class="col d-flex justify-content-center">
+          <!-- Checkbox -->
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="form2Example34" checked />
+            <label class="form-check-label" for="form2Example34"> Remember me </label>
+          </div>
+        </div>
+
+        <div class="col">
+          <!-- Simple link -->
+          <a href="#!">Forgot password?</a>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+      <!-- Register buttons -->
+      <div class="text-center">
+        <p>Not a member? <a href="#!">Register</a></p>
+        <p>or sign up with:</p>
+        <button type="button" class="btn btn-secondary btn-floating mx-1">
+          <i class="fab fa-google"></i>
+        </button>
+      </div>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

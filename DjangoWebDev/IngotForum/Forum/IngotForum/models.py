@@ -6,6 +6,7 @@ from django.dispatch import receiver
 
 class IngNote(models.Model):
     user = models.ForeignKey(User, related_name="ingnote", on_delete=models.DO_NOTHING)
+    title = models.TextField(max_length=100, default="Untitled")
     body = models.CharField(max_length=1000)
     create_time = models.DateTimeField(auto_now_add=True)
 
@@ -14,7 +15,6 @@ class IngNote(models.Model):
         return (f"{self.user} | {self.create_time:%Y-%m-%d %H:%M} | {self.body}")
 
 
-# Create a User profile model
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     follows = models.ManyToManyField("self",
@@ -28,7 +28,6 @@ class Profile(models.Model):
         return self.user.username
 
 
-# Create Profile when user Signs up
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:

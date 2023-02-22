@@ -5,7 +5,7 @@
     <div class="flex ml-5 space-x-2 justify-left">
         <div>
         {% if request.user.is_organisor %}
-        <a  href="{% url 'leads:document-list' %}"><button type="button" class="inline-block px-6 pt-2 mt-6 pb-2 bg-gray-600 text-black font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex align-center">
+        <a  href="{% url 'leads:document-list' %}"><button type="button" class="inline-block px-6 pt-2 mt-6 pb-2 bg-yellow-200 text-black font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-300 hover:shadow-lg focus:bg-blue-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-300 active:shadow-lg transition duration-150 ease-in-out flex align-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 pb-1">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
@@ -15,15 +15,19 @@
         </div>
     </div>
     <div class="flex mx-auto justify-center">
-    <div class="sm:w-2/3 sm:pl-8 sm:py-8 mt-4 pt-4 sm:mt-0 text-center sm:text-left">
-        <p class="mr-4 leading-relaxed text-lg font-medium mb-2">
-            <h1 class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3 pt-5">{{ document.name }}</h1>
-            <br/><hr class="border-2 border-amber-500 hover:border-purple-500 drop-shadow-xl"/><br/>
-                <div class="flex mx-auto ml-2">
-                    Description: {{ document.description }}<br/>
-                    Secret: {{ document.is_secret }}<br/>
-                </div>
-        </p>
+        <div class="sm:w-2/3 sm:pl-8 sm:py-8 mt-4 pt-4 sm:mt-0 text-center sm:text-left">
+            <p class="mr-4 leading-relaxed text-lg font-medium mb-2">
+                <h1 class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3 pt-5">{{ document.name }}</h1>
+                <br/><hr class="border-2 border-amber-500 hover:border-purple-500 drop-shadow-xl"/><br/>
+                    <div class="flex mx-auto ml-2">
+                        Description: {{ document.description }}<br/>
+                        Secret: {{ document.is_secret }}<br/>
+                    </div>
+            </p>
+            <p class="mr-4 leading-relaxed text-lg font-medium mb-2"><a class="mr-5" href="{% url 'leads:document-update' document.pk %}">Update Document</a><a href="{% url 'leads:document-delete' document.pk %}">Delete Document</a></p>
+
+        </div>
+    </div>
     <br/><br/>
 
 {% endblock content %}

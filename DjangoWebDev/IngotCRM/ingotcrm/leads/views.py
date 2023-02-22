@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import (
     TemplateView, ListView, DetailView, 
     CreateView, DeleteView, UpdateView, FormView)
@@ -53,7 +53,7 @@ class LeadDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "lead"
 
 
-class LeadCreateView(OrganisorRequiredMixin, CreateView):
+class LeadCreateView(LoginRequiredMixin, CreateView):
     template_name = "lead_create.html"
     form_class = LeadModelForm
 
@@ -209,17 +209,25 @@ class SignupView(CreateView):
 class DocumentListView(LoginRequiredMixin, ListView):
     template_name = "document_list.html"
     context_object_name = "documents"
+
     paginate_by = DOCUMENTS_PER_PAGE
     
     def get_queryset(self):
         user = self.request.user
 
         if user.is_organisor:
-            queryset = Document.objects.filter(organisation=user.userprofile)
+            documents = Document.objects.filter(organisation=user.userprofile)
         else:
-            queryset = Document.objects.filter(organisation=user.agent.organisation, is_secret=False)
+            documents = Document.objects.filter(organisation=user.agent.organisation, is_secret=False)
         
-        return queryset
+        documents = documents.order_by('-date_added')
+
+        ordering = self.request.GET.get('ordering', "")
+        if ordering:
+            documents = documents.order_by(ordering)
+
+        # Return a JSON response
+        return documents
 
 
 class DocumentDetailView(LoginRequiredMixin, DetailView):
@@ -228,7 +236,7 @@ class DocumentDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "document"
 
 
-class DocumentUploadView(OrganisorRequiredMixin, CreateView):
+class DocumentUploadView(LoginRequiredMixin, CreateView):
     template_name = "upload_document.html"
     form_class = UploadDocumentModelForm
 
@@ -239,27 +247,55 @@ class DocumentUploadView(OrganisorRequiredMixin, CreateView):
         return super(DocumentUploadView, self).form_valid(form)
 
 
-def listDocuments(request):
-    document = Document.objects.all()
+class DocumentUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "document_update.html"
+    form_class = UploadDocumentModelForm
 
-    ordering = request.GET.get('ordering', "")
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_organisor:
+            queryset = Document.objects.filter(organisation=user.userprofile)
+        else:
+            queryset = Document.objects.filter(organisation=user.agent.organisation)
+            queryset = Document.objects.filter(agent__user=user)
+        
+        return queryset
 
-    if ordering:
-        document = document.order_by(ordering)
-
-    page = request.GET.get('page', 1)
-    documents_paginator = Paginator(document, DOCUMENTS_PER_PAGE)
-
-    try:
-        document = documents_paginator.page(page)
-    except EmptyPage:
-        document = documents_paginator.page(documents_paginator.num_pages)
-    except:
-        document = documents_paginator.page(DOCUMENTS_PER_PAGE)
-
-    return render(request, "document_list.html", {"documents": document, "page_obj": document, "is_paginated":True, "paginator":documents_paginator})
+    def get_success_url(self):
+        return reverse("leads:document-detail", kwargs={"pk": self.get_object().id})
 
 
+class DocumentDeleteView(OrganisorRequiredMixin, DeleteView):
+    template_name = "document_delete.html"
+
+    def get_queryset(self):
+        user = self.request.user
+        return Document.objects.filter(organisation=user.userprofile)
+
+    def get_success_url(self):
+        return reverse("leads:document-list")
+
+
+
+#def listDocuments(request):
+#    document = Document.objects.all()
+#
+#    ordering = request.GET.get('ordering', "")
+#
+#    if ordering:
+#        document = document.order_by(ordering)
+#
+#    page = request.GET.get('page', 1)
+#    documents_paginator = Paginator(document, DOCUMENTS_PER_PAGE)
+#
+#    try:
+#        document = documents_paginator.page(page)
+#    except EmptyPage:
+#        document = documents_paginator.page(documents_paginator.num_pages)
+#    except:
+#        document = documents_paginator.page(DOCUMENTS_PER_PAGE)
+#
+#    return render(request, "document_list.html", {"documents": document, "page_obj": document, "is_paginated":True, "paginator":documents_paginator})
 
 
 # def  landing_page(request):

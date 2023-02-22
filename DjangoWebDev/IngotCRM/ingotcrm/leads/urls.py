@@ -12,6 +12,8 @@ from .views import (
     DocumentListView,
     DocumentDetailView,
     DocumentUploadView,
+    DocumentUpdateView,
+    DocumentDeleteView,
     )
 
 app_name = "leads"
@@ -29,4 +31,6 @@ urlpatterns = [
     path('documents/', DocumentListView.as_view(), name='document-list'),
     path('documents/<int:pk>/', DocumentDetailView.as_view(), name='document-detail'),
     path('upload_document/', DocumentUploadView.as_view(), name='document-upload'),
+    path('documents/<int:pk>/update/', DocumentUpdateView.as_view(), name='document-update'),
+    path('documents/<int:pk>/delete/', DocumentDeleteView.as_view(), name='document-delete'),
 ]

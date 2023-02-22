@@ -58,9 +58,6 @@ class Document(models.Model):
     lead = models.ForeignKey("Lead", null=True, blank=True, on_delete=models.SET_NULL)
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
-    class Meta:
-        ordering = ['-date_added']
-
     def __str__(self):
         return self.name
 
