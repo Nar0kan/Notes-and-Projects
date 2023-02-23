@@ -266,15 +266,18 @@ class DocumentUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class DocumentDeleteView(OrganisorRequiredMixin, DeleteView):
+    model = Document
     template_name = "document_delete.html"
 
-    def get_queryset(self):
-        user = self.request.user
-        return Document.objects.filter(organisation=user.userprofile)
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        file_field = self.object.file
+        if file_field:
+            file_field.delete()
+        return super(DocumentDeleteView, self).delete(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse("leads:document-list")
-
 
 
 #def listDocuments(request):

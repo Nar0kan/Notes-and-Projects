@@ -23,6 +23,7 @@ class Lead(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     phone_number = models.CharField(max_length=20)
     email = models.EmailField()
+    photo = models.ImageField(verbose_name="Photo", null=True, blank=True, upload_to="static/images/")  #, name="lead_"+str(id)
 
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)    # Every lead has an agent
@@ -52,7 +53,7 @@ class Document(models.Model):
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField()
     is_secret = models.BooleanField(default=False)
-    file = models.FileField(null=False, blank=False, upload_to="media/")
+    file = models.FileField(verbose_name=name, null=False, blank=False, upload_to="media/")
     date_added = models.DateTimeField(auto_now_add=True)
 
     lead = models.ForeignKey("Lead", null=True, blank=True, on_delete=models.SET_NULL)

@@ -10,7 +10,12 @@
           <div class="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400">
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10" viewBox="0 0 24 24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
               <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-              <img src="{% static 'images/UserPhoto.jpg' %}" style="border-radius: 50%;"></circle>
+              {% if lead.photo %}
+                <img src="{% static 'images/Ab4iCX1h.jpg' %}" style="border-radius: 50%; max-width: 20px;max-height: 20px;">
+              {% else %}
+                <img src="{% static 'images/UserPhoto.jpg' %}" style="border-radius: 50%;">
+              {% endif %}
+              </circle>
             </svg>
           </div>
           <div class="flex flex-col items-center text-center justify-center">
@@ -25,10 +30,26 @@
           <p class="mr-4 leading-relaxed text-lg font-medium mb-2">
             Information
             <br/><hr class="border-2 border-amber-500 hover:border-purple-500 drop-shadow-xl"/><br/>
-              <div class="flex mx-auto ml-2">
-                Age: {{ lead.age }}<br/>
-                E-mail: {{ lead.email }}<br/>
-                Agent: {{ lead.agent }}<br/>
+              <div class="sm:w-2/3 sm:pl-8 ml-2">
+                {% if lead.email %}
+                  Age: {{ lead.age }}
+                {% else %}
+                  Age: unknown
+                {% endif %}<br/>
+
+                {% if lead.email %}
+                  E-mail: {{ lead.email }}
+                {% else %}
+                  E-mail: unknown
+                {% endif %}<br/>
+
+                {% if lead.phone_number %}
+                  Phone number: {{ lead.phone_number }}
+                {% else %}
+                  Phone number: unknown
+                {% endif %}<br/>
+
+                Agent: <a href="{% url 'agents:agent-detail' lead.agent.pk %}">{{ lead.agent }}</a><br/>
                 Date added: {{ lead.date_added }}<br/>
               </div>
           </p>
