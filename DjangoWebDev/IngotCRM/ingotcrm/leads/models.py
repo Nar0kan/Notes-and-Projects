@@ -23,7 +23,7 @@ class Lead(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     phone_number = models.CharField(max_length=20)
     email = models.EmailField()
-    photo = models.ImageField(verbose_name="Photo", null=True, blank=True, upload_to="static/images/")  #, name="lead_"+str(id)
+    photo = models.ImageField(verbose_name="Photo", null=True, blank=True, upload_to="images/")  #, name="lead_"+str(id)
 
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)    # Every lead has an agent
