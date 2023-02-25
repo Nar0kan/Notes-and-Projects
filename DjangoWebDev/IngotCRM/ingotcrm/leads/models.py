@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class User(AbstractUser):
@@ -27,7 +28,7 @@ class Lead(models.Model):
 
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)    # Every lead has an agent
-    category = models.ForeignKey("Category", related_name="lead_cat", null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey("Category", related_name="lead_cat", null=True, blank=True, default=4, on_delete=models.SET_NULL)# Category.object.get(id=0)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -69,3 +70,11 @@ def postUserCreatedSignal(sender, instance, created, **kwargs):
 
 
 post_save.connect(postUserCreatedSignal, sender=User)
+
+
+@receiver(post_save, sender=UserProfile)
+def create_categories(sender, instance, created, **kwargs):
+    if created:
+        category_names = ['Unassigned', 'Contacted', 'Converted', 'Unconverted']
+        for name in category_names:
+            Category.objects.create(name=name, organisation=instance)

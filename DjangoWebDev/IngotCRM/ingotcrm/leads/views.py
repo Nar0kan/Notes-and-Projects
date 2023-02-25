@@ -133,15 +133,20 @@ class CategoryListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(CategoryListView, self).get_context_data(**kwargs)
         user = self.request.user
+        category_count = {}
 
         if user.is_organisor:
-            queryset = Lead.objects.filter(organisation=user.userprofile)
+            categories = Category.objects.filter(organisation=user.userprofile)
         else:
-            queryset = Lead.objects.filter(organisation=user.agent.organisation)
+            categories = Category.objects.filter(organisation=user.agent.organisation)
 
+        for category in categories:
+            category_count[category.id] = Category.objects.filter(id=category.id).count()
+        
         context.update({
-            "unassigned_lead_count": queryset.filter(category__isnull=True).count()
+            "category_count": category_count,
         })
+
         return context
     
     def get_queryset(self):

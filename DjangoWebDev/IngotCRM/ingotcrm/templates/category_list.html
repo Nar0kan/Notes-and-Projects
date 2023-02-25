@@ -3,52 +3,34 @@
 
 {% block content %}
 <section class="text-gray-500 body-font">
-    <div class="container flex-wrap px-0 py-12 mx-auto">
-        <div class="flex flex-auto -m-4">
-            <div class="p-4 lg:w-1/4">
-              <div class="h-full bg-cyan-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
-                <h1 class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">Unassigned</h1>
-                <a class="text-blue-500 inline-flex items-center" href="{% url 'leads:category-detail' 0 %}"><strong>Go to</strong>
-                  <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
-                    <path d="M5 12h14"></path>
+    <div class="container flex px-0 py-12 lg:grid-rows-2 lg:grid-cols-2">
+      {% for category in category_list %}
+          <div class="p-4 lg:w-1/4 lg:h-1/4">
+            <div class="flex transition h-full bg-cyan-100 bg-opacity-75 px-12 pt-16 pb-24 rounded-lg overflow-hidden text-center relative hover:bg-indigo-300 duration-300">
+              <a href="{% url 'leads:category-detail' category.pk %}"><h1 class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">{{ category.name }}</h1></a>
+                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
+                  <path d="M5 12h14"></path>
                     <path d="M12 5l7 7-7 7"></path>
                   </svg>
                 </a>
-                <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
-                  <span class="text-gray-400 mr-3 inline-flex items-center leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
-                      {{ unassigned_lead_count }}
-                  </span>
-                  <span class="text-gray-400 inline-flex items-center leading-none text-sm">
-                    <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
-                      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                    </svg>TODO comments
-                  </span>
-                </div>
-            </div>
-        </div>
-        {% for category in category_list %}
-            <div class="p-4 lg:w-1/4">
-              <div class="h-full bg-cyan-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
-                <h1 class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">{{ category.name }}</h1>
-                <a class="text-blue-500 inline-flex items-center" href="{% url 'leads:category-detail' category.pk %}"><strong>Go to</strong>
-                  <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
-                    <path d="M5 12h14"></path>
-                    <path d="M12 5l7 7-7 7"></path>
-                  </svg>
+              <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
+                <a href="#">
+                <span class="text-black hover:outline mr-3 inline-flex items-center leading-none text-sm pr-3 py-1 border-r-2 border-yellow-500">
+                  {{ category_count.get }}
+                </span>
                 </a>
-                <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
-                  <span class="text-gray-400 mr-3 inline-flex items-center leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
-                      TODO count
-                  </span>
-                  <span class="text-gray-400 inline-flex items-center leading-none text-sm">
-                    <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
-                      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                    </svg>TODO comments
-                  </span>
-                </div>
+                <a href="#">
+                <span class="text-black hover:outline inline-flex items-center leading-none text-sm">
+                  <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
+                    <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
+                  </svg>
+                  TODO comments
+                </span>
+                </a>
+              </div>
             </div>
         </div>
-    {% endfor %}
+      {% endfor %}
     </div>
 </section>
 {% endblock content %}
