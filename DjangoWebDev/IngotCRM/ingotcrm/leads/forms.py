@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lead, User, Agent, Document
+from .models import Lead, User, Agent, Document, Category, UserProfile
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 
 
@@ -10,12 +10,24 @@ class LeadModelForm(forms.ModelForm):
             'first_name',
             'last_name',
             'age',
-            'agent',
             'description',
             'phone_number',
             'email',
             'photo',
+            'category',
+            'agent',
         )
+    
+    def __init__(self, *args, **kwargs):
+        organisation = kwargs.pop('organisation', None)
+        super().__init__(*args, **kwargs)
+        
+        if organisation:
+            categories = Category.objects.filter(organisation=organisation)
+            self.fields['category'].queryset = categories
+            
+            agents = Agent.objects.filter(organisation=organisation)
+            self.fields['agent'].queryset = agents
 
 
 class LeadForm(forms.Form):
@@ -54,8 +66,19 @@ class UploadDocumentModelForm(forms.ModelForm):
         model = Document
         fields = (
             'lead',
-            'organisation',
-            'name',
+            'title',
+            'description',
+            'is_secret',
+            'file',
+            )
+
+
+class UpdateDocumentModelForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = (
+            'lead',
+            'title',
             'description',
             'is_secret',
             'file',

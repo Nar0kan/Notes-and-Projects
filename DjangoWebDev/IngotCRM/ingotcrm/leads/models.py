@@ -24,11 +24,11 @@ class Lead(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     phone_number = models.CharField(max_length=20)
     email = models.EmailField()
-    photo = models.ImageField(verbose_name="Photo", null=True, blank=True, upload_to="images/")  #, name="lead_"+str(id)
+    photo = models.ImageField(verbose_name="Photo", null=True, blank=True, upload_to="images/")
 
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)    # Every lead has an agent
-    category = models.ForeignKey("Category", related_name="lead_cat", null=True, blank=True, default=4, on_delete=models.SET_NULL)# Category.object.get(id=0)
+    category = models.ForeignKey("Category", related_name="lead_cat", null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -51,13 +51,13 @@ class Category(models.Model):
 
 
 class Document(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200, unique=True)
     description = models.TextField()
     is_secret = models.BooleanField(default=False)
-    file = models.FileField(verbose_name=name, null=False, blank=False, upload_to="media/")
+    file = models.FileField(verbose_name=title, null=False, blank=False, upload_to="media/")
     date_added = models.DateTimeField(auto_now_add=True)
 
-    lead = models.ForeignKey("Lead", null=True, blank=True, on_delete=models.SET_NULL)
+    lead = models.ForeignKey("Lead", null=False, blank=False, on_delete=models.CASCADE)
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     def __str__(self):

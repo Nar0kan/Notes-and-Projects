@@ -20,7 +20,11 @@
     <!-- Remove top/bottom padding when first/last child -->
     <li class="flex py-4 first:pt-0 last:pb-0">
       <a href="{% url 'leads:lead-detail' lead.pk %}">
-        <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
+        {% if lead.photo %}
+          <img src="{{ lead.photo.url }}" alt="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" style="border-radius: 50%;"/>
+        {% else %}
+          <img src="{% static 'images\UserPhoto.jpg' %}" alt="Photo" class="h-12 w-12" style="border-radius: 50%;"/>
+        {% endif %}
       </a>
       <div class="ml-3 overflow-hidden">
         <p class="text-sm font-medium text-slate-900">

@@ -63,7 +63,8 @@ class AgentUpdateView(OrganisorRequiredMixin, generic.UpdateView):
     
     def get_queryset(self):
         organisation = self.request.user.userprofile
-        return Agent.objects.filter(organisation=organisation)
+        queryset = Agent.objects.filter(organisation=organisation)
+        return queryset
 
     def get_success_url(self) -> str:
         return reverse("agents:agent-detail")
@@ -72,7 +73,6 @@ class AgentUpdateView(OrganisorRequiredMixin, generic.UpdateView):
 class AgentDeleteView(OrganisorRequiredMixin, generic.DeleteView):
     template_name = "agents/agent_delete.html"
     context_object_name = "agent"
-    form_class = AgentModelForm
 
     def get_queryset(self):
         organisation = self.request.user.userprofile
