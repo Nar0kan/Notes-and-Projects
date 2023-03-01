@@ -2,9 +2,12 @@
 {% load static %}
 
 {% block content %}
-  <div class="flex ml-5 space-x-2 justify-left">
-    <div>
-      <a  href="{% url 'leads:lead-create' %}"><button type="button" class="inline-block px-6 pt-2 mt-6 pb-2 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex align-center">
+  <div class="flex justify-center">
+    <p class="text-5xl text-black mr-5 mt-5 mb-10">Lead list</p>
+  </div>
+  <div class="flex mx-10 border-b-4 border-yellow-300 border-transparent-90 space-x-2 justify-left">
+    <div class="flex mb-2">
+      <a  href="{% url 'leads:lead-create' %}"><button type="button" class="inline-block px-6 pt-2 pb-2 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex align-center">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
         </svg>
@@ -14,51 +17,50 @@
   </div>
 
   <ul role="list" class="p-6 divide-y divide-slate-200 mt-4">
+
     {% for lead in leads %}
-    <!-- Remove top/bottom padding when first/last child -->
-    <li class="flex py-4 first:pt-0 last:pb-0">
-      <a href="{% url 'leads:lead-detail' lead.pk %}">
-        {% if lead.photo %}
-          <img src="{{ lead.photo.url }}" alt="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" style="border-radius: 50%;"/>
-        {% else %}
-          <img src="{% static 'images\UserPhoto.jpg' %}" alt="Photo" class="h-12 w-12" style="border-radius: 50%;"/>
-        {% endif %}
-      </a>
-      <div class="ml-3 overflow-hidden">
-        <p class="text-sm font-medium text-slate-900">
-          <a href="{% url 'leads:lead-detail' lead.pk %}">
-            <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
-          </a>
-        </p>
-        <p class="text-sm text-slate-500 truncate"></p>
-      </div>
-    </li>
+      <li class="flex py-4 first:pt-0 last:pb-0">
+        <a href="{% url 'leads:lead-detail' lead.pk %}">
+          {% if lead.photo %}
+            <img src="{{ lead.photo.url }}" alt="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" style="border-radius: 50%;"/>
+          {% else %}
+            <img src="{% static 'images\UserPhoto.jpg' %}" alt="Photo" class="h-12 w-12" style="border-radius: 50%;"/>
+          {% endif %}
+        </a>
+        <div class="ml-3 overflow-hidden">
+          <p class="text-sm font-medium text-slate-900">
+            <a href="{% url 'leads:lead-detail' lead.pk %}">
+              <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
+            </a>
+          </p>
+          <p class="text-sm text-slate-500 truncate">{{ lead.email }}</p>
+        </div>
+      </li>
     {% endfor %}
-  </ul>
-  <br/>
-  {% if unassigned_leads.exists %}
-    <h1 class="text-sm font-medium flex justify-center">Unassigned leads</h1>
-      <ul role="list" class="p-6 divide-y divide-slate-200">
-      {% for lead in unassigned_leads %}
-        <!-- Remove top/bottom padding when first/last child -->
-        <li class="flex py-4 first:pt-0 last:pb-0">
-          <a href="{% url 'leads:lead-detail' lead.pk %}">
-            <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
-          </a>
-          <div class="ml-3 overflow-hidden">
-            <p class="text-sm font-medium text-slate-900">
-              <a href="{% url 'leads:lead-detail' lead.pk %}">
-                <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
-              </a>
-            </p>
-            <a href="{% url 'leads:assign-agent' lead.pk %}"><p class="text-sm text-slate-500 truncate"> Assign to an agent -> </p></a>
-          </div>
-        </li>
-        </hr>
-      </ul>
-      <br/>
-      {% endfor %}
-  {% endif %}
+  
+    </ul>
+    <br/>
+  
+    {% if unassigned_leads.exists %}
+      <h1 class="text-sm font-medium flex justify-center">Unassigned leads</h1>
+        <ul role="list" class="p-6 divide-y divide-slate-200">
+        
+          {% for lead in unassigned_leads %}
+            <a href="{% url 'leads:assign-agent' lead.pk %}">
+              <li class="flex py-4 first:pt-0 last:pb-0">
+                <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
+                <div class="ml-3 overflow-hidden">
+                  <p class="text-sm font-medium text-slate-900">
+                      <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
+                  </p>
+                  <h5 class="ml-12 text-sm text-slate-300">Created at {{ lead.date_added }}</h5>
+                  <p class="text-sm text-slate-500 truncate"> Assign to an agent -> </p>
+                </div>
+              </li></hr>
+            </a>
+          {% endfor %}
+        </ul><br/>
+    {% endif %}
   
     
 {% endblock content %}

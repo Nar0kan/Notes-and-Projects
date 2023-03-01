@@ -1,21 +1,20 @@
 <header class="text-white-500 body-font">
-  
   <div class="container bg-cyan-100 mx-auto flex justify-left p-5 flex-col md:flex-row items-center">
     <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
       <a href="{% url 'landing-page' %}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-12 h-10 text-white p-2 bg-green-500 rounded-full" viewBox="0 0 24 24" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
       </svg></a>
-      <a href="{% url 'landing-page' %}"><span class="flex ml-3 mr-3 hover:text-green-900 text-xl">Ingot CRM</span></a>
+      <a href="{% url 'landing-page' %}"><span class="flex ml-3 mr-3 hover:text-green-900 hover:bg-green-600 text-3xl">Ingot CRM</span></a>
     </a>
     {% if request.user.is_authenticated %}
       <div class="flex space-x-2 justify-center">
         <nav class="md:mr-auto md:ml-8 md:py-4 md:pl-4 md:border-l md:border-green-400	flex flex-wrap items-center text-base justify-center">
-          <a class="text-2xs font-medium mr-5 hover:text-green-900" href="{% url 'leads:lead-list' %}">Leads</a>
-          <a class="text-2xs font-medium mr-5 hover:text-pink-900" href="{% url 'leads:document-list' %}">Documents</a>
+          <a class="text-xl ml-4 pr-2 border-green-900 hover:border-r-2 hover:border-b-2  font-medium mr-5 hover:text-green-900" href="{% url 'leads:lead-list' %}">Leads</a>
+          <a class="text-xl pr-2 border-pink-900 hover:border-r-2 hover:border-b-2  font-medium mr-5 hover:text-pink-900" href="{% url 'leads:document-list' %}">Documents</a>
           {% if request.user.is_organisor %}
-          <a class="text-2xs font-medium mr-5 hover:text-yellow-900" href="{% url 'agents:agent-list' %}">Agents</a>
+            <a class="text-xl pr-2 border-yellow-900 hover:border-r-2 hover:border-b-2 font-medium mr-5 hover:text-yellow-900" href="{% url 'agents:agent-list' %}">Agents</a>
           {% endif %}
-          <a class="text-2xs font-medium mr-5 hover:text-blue-900" href="{% url 'leads:category-list' %}">Categories</a>
+          <a class="text-xl pr-2 border-blue-900 hover:border-r-2 hover:border-b-2 font-medium mr-5 hover:text-blue-900" href="{% url 'leads:category-list' %}">Categories</a>
         </nav>
       </div>
       <div class="flex mx-auto mr-5">

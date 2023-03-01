@@ -2,15 +2,11 @@
 {% load tailwind_filters %}
 
 {% block content %}
-    <h1 class="sm:text-3xl text-2xl font-medium mb-1 mt-5 text-gray-900">
-    Update agent
-    </h1>
-        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
-        <b/> {{ agent.user.username }}
-        </h1>
+    <h1 class="sm:text-3xl text-2xl font-medium mb-1 mt-5 text-center text-gray-900">
+    Update agent <a href="{% url 'agents:agent-detail' agent.pk %}" class="text-black hover:text-blue-400">{{ agent.user.username }}</a></h1>
     <br/><hr/>
     
-<div class="max-w-lg mx-auto align-center mt-10">
+<div class="flex justify-center text-black text-center mt-10">
   <form method="post">
     {% csrf_token %}
     {{ form|crispy }}

@@ -11,8 +11,7 @@ from .models import Lead, Agent, Category, Document
 from .forms import (
     LeadForm, LeadModelForm,
     CustomUserCreationForm, AssignAgentForm,
-    LeadCategoryUpdateForm, UploadDocumentModelForm,
-    UpdateDocumentModelForm, )
+    LeadCategoryUpdateForm, UploadDocumentModelForm, )
 from agents.mixins import OrganisorRequiredMixin
 
 
@@ -245,6 +244,31 @@ class LeadCategoryUpdateView(LoginRequiredMixin, UpdateView):
             queryset = Lead.objects.filter(agent__user=user)
         
         return queryset
+    
+    def get_form(self, form_class=LeadCategoryUpdateForm):
+        form = super().get_form(form_class)
+        user = self.request.user
+
+        if user.is_organisor:
+            form.fields['category'].queryset = Category.objects.filter(organisation=user.userprofile)
+        else:
+            form.fields['category'].queryset = Category.objects.filter(organisation=user.agent.organisation)
+
+        return form
+    
+    def form_valid(self, form):
+        category = form.save(commit=False)
+        user = self.request.user
+
+        if user.is_organisor:
+            category.organisation = user.userprofile
+        else:
+            category.organisation = user.agent.organisation
+        
+        category.save()
+
+        form.instance.organisation = category.organisation
+        return super(LeadCategoryUpdateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse("leads:lead-detail", kwargs={"pk": self.get_object().id})
@@ -302,6 +326,17 @@ class DocumentUploadView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self) -> str:
         return reverse("leads:document-list")
+
+    def get_form(self, form_class=UploadDocumentModelForm):
+        form = super().get_form(form_class)
+        user = self.request.user
+
+        if user.is_organisor:
+            form.fields['lead'].queryset = Lead.objects.filter(organisation=user.userprofile)
+        else:
+            form.fields['lead'].queryset = Lead.objects.filter(organisation=user.agent.organisation)
+
+        return form
     
     def form_valid(self, form):
         document = form.save(commit=False)
@@ -313,12 +348,13 @@ class DocumentUploadView(LoginRequiredMixin, CreateView):
             document.organisation = user.agent.organisation
         
         document.save()
+        form.instance.organisation = document.organisation
         return super(DocumentUploadView, self).form_valid(form)
 
 
 class DocumentUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "document_update.html"
-    form_class = UpdateDocumentModelForm
+    form_class = UploadDocumentModelForm
 
     def get_queryset(self):
         user = self.request.user
@@ -329,6 +365,30 @@ class DocumentUpdateView(LoginRequiredMixin, UpdateView):
             queryset = Document.objects.filter(organisation=user.agent.organisation)
         
         return queryset
+    
+    def get_form(self, form_class=UploadDocumentModelForm):
+        form = super().get_form(form_class)
+        user = self.request.user
+
+        if user.is_organisor:
+            form.fields['lead'].queryset = Lead.objects.filter(organisation=user.userprofile)
+        else:
+            form.fields['lead'].queryset = Lead.objects.filter(organisation=user.agent.organisation)
+
+        return form
+    
+    def form_valid(self, form):
+        document = form.save(commit=False)
+        user = self.request.user
+
+        if user.is_organisor:
+            document.organisation = user.userprofile
+        else:
+            document.organisation = user.agent.organisation
+        
+        document.save()
+        form.instance.organisation = document.organisation
+        return super(DocumentUpdateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse("leads:document-detail", kwargs={"pk": self.get_object().id})

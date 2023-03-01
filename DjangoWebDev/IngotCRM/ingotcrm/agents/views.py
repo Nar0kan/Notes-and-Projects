@@ -27,7 +27,9 @@ class AgentCreateView(OrganisorRequiredMixin, generic.CreateView):
         user = form.save(commit=False)
         user.is_agent = True
         user.is_organisor = False
-        user.set_password(''.join([str(randbelow(10000)) for i in range(20)]))
+        
+        password = ''.join([str(randbelow(10000)) for i in range(20)])
+        user.set_password(password)
         user.save()
 
         Agent.objects.create(
@@ -36,14 +38,14 @@ class AgentCreateView(OrganisorRequiredMixin, generic.CreateView):
         )
 
         send_mail(
-            from_email="admin@test.com",
+            from_email=f"{self.request.user.userprofile}",
             recipient_list=[user.email],
             subject="You are invited to be an Agent",
-            message="You were added as an agent on Ingot CRM."
+            message=f"You were added as an agent on Ingot CRM.\n\n\
+                Log in form: https://127.0.0.1:8000/login \n\n\
+                User this password to log in the system: {password}."
         )
 
-        # agent.organisation = self.request.user.userprofile
-        # agent.save()
         return super(AgentCreateView, self).form_valid(form)
 
 
@@ -62,9 +64,24 @@ class AgentUpdateView(OrganisorRequiredMixin, generic.UpdateView):
     context_object_name = "agent"
     
     def get_queryset(self):
-        organisation = self.request.user.userprofile
+        user = self.request.user
+        organisation = user.userprofile
         queryset = Agent.objects.filter(organisation=organisation)
         return queryset
+    
+    def form_valid(self, form):
+        agent = form.save(commit=False)
+        user = self.request.user
+
+        if user.is_organisor:
+            agent.organisation = user.userprofile
+        else:
+            agent.organisation = user.agent.organisation
+        
+        agent.save()
+
+        form.instance.organisation = agent.organisation
+        return super(AgentUpdateView, self).form_valid(form)
 
     def get_success_url(self) -> str:
         return reverse("agents:agent-detail")

@@ -59,6 +59,14 @@ class LeadCategoryUpdateForm(forms.ModelForm):
         fields = (
             'category',
         )
+    
+    def __init__(self, *args, **kwargs):
+        organisation = kwargs.pop('organisation', None)
+        super().__init__(*args, **kwargs)
+        
+        if organisation:
+            categories = Category.objects.filter(organisation=organisation)
+            self.fields['category'].queryset = categories
 
 
 class UploadDocumentModelForm(forms.ModelForm):
@@ -72,14 +80,10 @@ class UploadDocumentModelForm(forms.ModelForm):
             'file',
             )
 
-
-class UpdateDocumentModelForm(forms.ModelForm):
-    class Meta:
-        model = Document
-        fields = (
-            'lead',
-            'title',
-            'description',
-            'is_secret',
-            'file',
-            )
+    def __init__(self, *args, **kwargs):
+        organisation = kwargs.pop('organisation', None)
+        super().__init__(*args, **kwargs)
+        
+        if organisation:
+            leads = Lead.objects.filter(organisation=organisation)
+            self.fields['lead'].queryset = leads
