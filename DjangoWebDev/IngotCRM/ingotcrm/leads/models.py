@@ -7,6 +7,9 @@ from django.dispatch import receiver
 class User(AbstractUser):
     is_organisor = models.BooleanField(default=True)
     is_agent = models.BooleanField(default=False)
+    position = models.CharField(max_length=100, default="employee", null=True, blank=True)
+    phone_number = models.CharField(max_length=100, default="unknown", null=True, blank=True)
+    photo = models.ImageField(verbose_name="Photo", null=True, blank=True, upload_to="images/agents")
 
 
 class UserProfile(models.Model):
@@ -22,9 +25,9 @@ class Lead(models.Model):
     age = models.IntegerField(default=0)
     description = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    phone_number = models.CharField(max_length=20)
-    email = models.EmailField()
-    photo = models.ImageField(verbose_name="Photo", null=True, blank=True, upload_to="images/")
+    phone_number = models.CharField(max_length=20, unique=True)
+    email = models.EmailField(unique=True)
+    photo = models.ImageField(verbose_name="Photo", null=True, blank=True, upload_to="images/leads")
 
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     agent = models.ForeignKey("Agent", null=True, blank=True, on_delete=models.SET_NULL)    # Every lead has an agent
@@ -35,8 +38,8 @@ class Lead(models.Model):
 
 
 class Agent(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)     # Every agent has 1 user
-    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)             # Agent == User(AbstractUser)
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE) # Organisation == UserProfile == User(AbstractUser)
 
     def __str__(self):
         return self.user.email

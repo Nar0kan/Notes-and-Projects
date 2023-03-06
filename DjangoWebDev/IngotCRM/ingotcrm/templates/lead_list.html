@@ -17,7 +17,6 @@
   </div>
 
   <ul role="list" class="p-6 divide-y divide-slate-200 mt-4">
-
     {% for lead in leads %}
       <li class="flex py-4 first:pt-0 last:pb-0">
         <a href="{% url 'leads:lead-detail' lead.pk %}">
@@ -37,30 +36,67 @@
         </div>
       </li>
     {% endfor %}
-  
-    </ul>
-    <br/>
-  
-    {% if unassigned_leads.exists %}
-      <h1 class="text-sm font-medium flex justify-center">Unassigned leads</h1>
-        <ul role="list" class="p-6 divide-y divide-slate-200">
-        
-          {% for lead in unassigned_leads %}
-            <a href="{% url 'leads:assign-agent' lead.pk %}">
-              <li class="flex py-4 first:pt-0 last:pb-0">
-                <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
-                <div class="ml-3 overflow-hidden">
-                  <p class="text-sm font-medium text-slate-900">
-                      <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
-                  </p>
-                  <h5 class="ml-12 text-sm text-slate-300">Created at {{ lead.date_added }}</h5>
-                  <p class="text-sm text-slate-500 truncate"> Assign to an agent -> </p>
-                </div>
-              </li></hr>
-            </a>
+  </ul>
+  <br/>
+
+  <div class="flex justify-center mt-5">
+    {% if is_paginated %}
+      <nav aria-label="Page navigation example" onchange="location = finalurl();">
+        <ul class="flex list-style-none">
+          {% if page_obj.has_previous %}
+            <li class="page-item"><a
+              class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              href="{% url 'leads:lead-list' %}?page={{ page_obj.previous_page_number }}">Previous</a></li>
+          {% else %}
+            <li class="page-item disabled"><a
+              class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-500 pointer-events-none focus:shadow-none"
+              href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
+          {% endif %}
+          {% for page_num in paginator.page_range %}
+            {% if page_num == page_obj.number %}
+              <li class="page-item"><a
+                class="page-link relative block py-1.5 px-3 border-2 border-color-cyan-900 bg-transparent outline-none transition-all duration-300 rounded text-blue-600 hover:bg-gray-200 focus:shadow-none"
+                href="{% url 'leads:lead-list' %}?page={{ page_num }}">{{ page_num }}</a></li>
+            {% else %}
+              <li class="page-item"><a
+                class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                href="{% url 'leads:lead-list' %}?page={{ page_num }}">{{ page_num }}</a></li>
+            {% endif %}
           {% endfor %}
-        </ul><br/>
+          {% if page_obj.has_next %}
+            <li class="page-item"><a
+              class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              href="{% url 'leads:lead-list' %}?page={{ page_obj.next_page_number }}">Next</a></li>
+          {% else %}
+            <li class="page-item disabled"><a
+            class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-500 pointer-events-none focus:shadow-none"
+            href="#" tabindex="-1" aria-disabled="true">Next</a></li>
+          {% endif %}
+        </ul>
+      </nav>
     {% endif %}
+  </div>
+  
+  {% if unassigned_leads.exists %}
+    <h1 class="text-sm font-medium flex justify-center">Unassigned leads</h1>
+      <ul role="list" class="p-6 divide-y divide-slate-200">
+      
+        {% for lead in unassigned_leads %}
+          <a href="{% url 'leads:assign-agent' lead.pk %}">
+            <li class="flex py-4 first:pt-0 last:pb-0">
+              <img src="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" alt="UserPhoto" style="border-radius: 50%;"/>
+              <div class="ml-3 overflow-hidden">
+                <p class="text-sm font-medium text-slate-900">
+                    <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
+                </p>
+                <h5 class="ml-12 text-sm text-slate-300">Created at {{ lead.date_added }}</h5>
+                <p class="text-sm text-slate-500 truncate"> Assign to an agent -> </p>
+              </div>
+            </li></hr>
+          </a>
+        {% endfor %}
+      </ul><br/>
+  {% endif %}
   
     
 {% endblock content %}

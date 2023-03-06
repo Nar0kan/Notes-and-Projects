@@ -16,6 +16,7 @@ from agents.mixins import OrganisorRequiredMixin
 
 
 DOCUMENTS_PER_PAGE = 2
+LEADS_PER_PAGE = 2
 
 
 class LandingPageView(TemplateView):
@@ -25,6 +26,7 @@ class LandingPageView(TemplateView):
 class LeadListView(LoginRequiredMixin, ListView):
     template_name = "lead_list.html"
     context_object_name = "leads"
+    paginate_by = LEADS_PER_PAGE
 
     def get_queryset(self):
         user = self.request.user
@@ -34,16 +36,20 @@ class LeadListView(LoginRequiredMixin, ListView):
             queryset = Lead.objects.filter(organisation=user.agent.organisation, agent__isnull=False)
             queryset = Lead.objects.filter(agent__user=user)
         
+        queryset.order_by("-date_added")
+
         return queryset
     
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super().get_context_data(**kwargs)
+
         if user.is_organisor:
             queryset = Lead.objects.filter(organisation=user.userprofile, agent__isnull=True)
             context.update({
                 "unassigned_leads": queryset
             })
+        
         return context
 
 
@@ -286,7 +292,7 @@ class DocumentListView(LoginRequiredMixin, ListView):
     template_name = "document_list.html"
     context_object_name = "documents"
 
-    paginate_by = DOCUMENTS_PER_PAGE
+    #paginate_by = DOCUMENTS_PER_PAGE
     
     def get_queryset(self):
         user = self.request.user

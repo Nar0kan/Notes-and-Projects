@@ -1,9 +1,10 @@
 from django.shortcuts import render, reverse
 from django.views import generic
 from django.core.mail import send_mail
-from leads.models import Agent
+from leads.models import Agent, User
 from .mixins import OrganisorRequiredMixin
-from .forms import AgentModelForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import AgentUpdateModelForm, AgentCreateModelForm, AgentProfileUpdateModelForm
 from secrets import randbelow
 
 
@@ -18,7 +19,7 @@ class AgentListView(OrganisorRequiredMixin, generic.ListView):
 
 class AgentCreateView(OrganisorRequiredMixin, generic.CreateView):
     template_name = "agents/agent_create.html"
-    form_class = AgentModelForm
+    form_class = AgentCreateModelForm
 
     def get_success_url(self) -> str:
         return reverse("agents:agent-list")
@@ -60,31 +61,40 @@ class AgentDetailView(OrganisorRequiredMixin, generic.DetailView):
 
 class AgentUpdateView(OrganisorRequiredMixin, generic.UpdateView):
     template_name = "agents/agent_update.html"
-    form_class = AgentModelForm
+    model = User
+    fields = ["username", "first_name", "last_name", "position", "photo"]
     context_object_name = "agent"
-    
-    def get_queryset(self):
-        user = self.request.user
-        organisation = user.userprofile
-        queryset = Agent.objects.filter(organisation=organisation)
-        return queryset
-    
-    def form_valid(self, form):
-        agent = form.save(commit=False)
-        user = self.request.user
-
-        if user.is_organisor:
-            agent.organisation = user.userprofile
-        else:
-            agent.organisation = user.agent.organisation
-        
-        agent.save()
-
-        form.instance.organisation = agent.organisation
-        return super(AgentUpdateView, self).form_valid(form)
 
     def get_success_url(self) -> str:
-        return reverse("agents:agent-detail")
+        return reverse("agents:agent-detail", kwargs={"pk": self.get_object().id})
+
+    def get_initial(self):
+        initial = super().get_initial()
+        pk = self.kwargs.get('pk')
+        agent = Agent.objects.get(id=pk)
+        initial['username'] = agent.user.username
+        initial['first_name'] = agent.user.first_name
+        initial['last_name'] = agent.user.last_name
+        initial['photo'] = agent.user.photo
+        
+        return initial
+
+    def form_valid(self, form):
+        agent = form.save(commit=False)
+        agent.user.username = form.cleaned_data['username']
+        agent.user.first_name = form.cleaned_data['first_name']
+        agent.user.last_name = form.cleaned_data['last_name']
+        agent.user.position = form.cleaned_data['position']
+        agent.user.photo = form.cleaned_data['photo']
+        agent.save()
+        agent.user.save()
+
+        return super(AgentUpdateView, self).form_valid(form)
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        agent = Agent.objects.filter(id=pk)
+        return agent
     
 
 class AgentDeleteView(OrganisorRequiredMixin, generic.DeleteView):
@@ -97,3 +107,30 @@ class AgentDeleteView(OrganisorRequiredMixin, generic.DeleteView):
 
     def get_success_url(self) -> str:
         return reverse("agents:agent-list")
+
+
+class AgentProfileView(LoginRequiredMixin, generic.DetailView):
+    template_name = "agents/agent_profile.html"
+    context_object_name = "agent"
+    
+    def get_queryset(self):
+        agent = self.request.user.id
+        return User.objects.filter(id=agent)
+
+
+class AgentProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "agents/agent_profile_update.html"
+    form_class = AgentProfileUpdateModelForm
+    context_object_name = "agent"
+    
+    def get_queryset(self):
+        agent = self.request.user.id
+        queryset = User.objects.filter(id=agent)
+        print(queryset)
+        return queryset
+    
+    def form_valid(self, form):
+        return super(AgentProfileUpdateView, self).form_valid(form)
+
+    def get_success_url(self) -> str:
+        return reverse("agents:agent-profile", kwargs={"pk": self.get_object().id})

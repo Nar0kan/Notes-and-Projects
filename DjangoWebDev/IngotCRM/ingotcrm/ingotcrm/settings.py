@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'agents',
     'crispy_forms',
     'crispy_tailwind',
+    'future',
 ]
 
 MIDDLEWARE = [
