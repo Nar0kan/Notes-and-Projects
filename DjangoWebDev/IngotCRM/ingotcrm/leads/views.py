@@ -12,6 +12,7 @@ from .forms import (
     LeadForm, LeadModelForm,
     CustomUserCreationForm, AssignAgentForm,
     LeadCategoryUpdateForm, UploadDocumentModelForm, )
+from .filters import DocumentFilter
 from agents.mixins import OrganisorRequiredMixin
 
 
@@ -289,26 +290,30 @@ class SignupView(CreateView):
 
 
 class DocumentListView(LoginRequiredMixin, ListView):
+    #queryset = Document.objects.all()
     template_name = "document_list.html"
     context_object_name = "documents"
 
-    #paginate_by = DOCUMENTS_PER_PAGE
-    
+    paginate_by = DOCUMENTS_PER_PAGE
+
+
     def get_queryset(self):
+        #queryset = super().get_queryset()
         user = self.request.user
 
         if user.is_organisor:
-            documents = Document.objects.filter(organisation=user.userprofile)
+            queryset = Document.objects.filter(organisation=user.userprofile)
         else:
-            documents = Document.objects.filter(organisation=user.agent.organisation, is_secret=False)
+            queryset = Document.objects.filter(organisation=user.agent.organisation, is_secret=False)
         
-        documents = documents.order_by('-date_added')
-
-        ordering = self.request.GET.get('ordering', "")
-        if ordering:
-            documents = documents.order_by(ordering)
-
-        return documents
+        self.filterset = DocumentFilter(self.request.GET, queryset=queryset)
+        return self.filterset.qs
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.filterset.form
+        return context 
 
 
 class DocumentDetailView(LoginRequiredMixin, DetailView):
