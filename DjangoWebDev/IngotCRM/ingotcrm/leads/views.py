@@ -24,6 +24,14 @@ class LandingPageView(TemplateView):
     template_name = "landing.html"
 
 
+class AboutPageView(TemplateView):
+    template_name = "about.html"
+
+
+class PricingPageView(TemplateView):
+    template_name = "pricing.html"
+
+
 class LeadListView(LoginRequiredMixin, ListView):
     template_name = "lead_list.html"
     context_object_name = "leads"

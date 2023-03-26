@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-from leads.views import LandingPageView, SignupView
+from leads.views import LandingPageView, SignupView, AboutPageView, PricingPageView
 from django.conf import settings
 from django.contrib.auth.views import (
     LoginView, LogoutView, 
     PasswordResetView, PasswordResetDoneView,
-    PasswordResetConfirmView, PasswordResetCompleteView
+    PasswordResetConfirmView, PasswordResetCompleteView,
     )
 from django.conf.urls.static import static
 
@@ -13,6 +13,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LandingPageView.as_view(), name="landing-page"),
+    path('about/', AboutPageView.as_view(), name="about-page"),
+    path('pricing/', PricingPageView.as_view(), name="pricing-page"),
     path('leads/', include('leads.urls', namespace="leads")),
     path('login/', LoginView.as_view(), name='login'),
     path('register/', SignupView.as_view(), name='register'),
