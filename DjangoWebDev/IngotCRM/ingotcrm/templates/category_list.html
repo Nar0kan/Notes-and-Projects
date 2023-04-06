@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
 
+
 {% block content %}
-<section class="text-gray-500 body-font">
-    <div class="container flex px-0 py-12 lg:grid-rows-2 lg:grid-cols-2">
+  <section class="text-gray-500 body-font">
+    <div class="container py-8 grid grid-cols-1 sm:grid-cols-2 gap-2 xl:grid-cols-4">
       {% regroup category_list by category.pk as newlist %}
       {% for categories in newlist %}
         {% for category in categories.list %}
-          <div class="p-4 lg:w-1/4 lg:h-1/4">
+          <div class="flex justify-center">
             <a href="{% url 'leads:category-detail' category.pk %}">
             <div class="flex transition h-full bg-cyan-100 bg-opacity-75 px-12 pt-16 pb-24 rounded-lg overflow-hidden text-center relative hover:bg-indigo-300 duration-300">
-              <h1 class="title-font sm:text-3xl text-xl font-medium text-gray-900 mb-3 inline-flex">{{ category.name }}
+              <h1 class="title-font md:text-3xl text-xl font-medium text-gray-900 mb-3 inline-flex">{{ category.name }}
                 <svg class="w-10 h-5 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke:currentColor;">
                   <path d="M5 12h14"></path>
                     <path d="M12 5l7 7-7 7"></path>
@@ -34,5 +35,5 @@
         {% endfor %}
       {% endfor %}
     </div>
-</section>
+  </section>
 {% endblock content %}

@@ -3,6 +3,10 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+# For file upload validator
+from .validators import validate_file
+from django.core.exceptions import ValidationError
+
 
 class User(AbstractUser):
     is_organisor = models.BooleanField(default=True)
@@ -51,20 +55,21 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
+        
 
 class Document(models.Model):
     title = models.CharField(max_length=200, unique=True)
     description = models.TextField()
     is_secret = models.BooleanField(default=False)
-    file = models.FileField(verbose_name=title, null=False, blank=False, upload_to="media/")
+    file = models.FileField(verbose_name=title, validators=[validate_file, ], null=False, blank=False, upload_to="media/")
+    #file = ContentTypeRestrictedFileField(verbose_name=title, content_types=['application/txt', 'application/pdf', 'application/docx', 'application/doc'], max_upload_size=5242880, null=False, blank=False, upload_to="media/")
     date_added = models.DateTimeField(auto_now_add=True)
 
     lead = models.ForeignKey("Lead", null=False, blank=False, on_delete=models.CASCADE)
     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 def postUserCreatedSignal(sender, instance, created, **kwargs):
