@@ -40,13 +40,13 @@
               <span
                 data-te-stepper-head-text-ref
                 class="text-neutral-500 after:absolute after:flex after:text-[0.8rem] after:content-[data-content] dark:text-neutral-300">
-                Create your companies workplace
+                Create your own workplace
               </span>
             </div>
             <div
               data-te-stepper-content-ref
               class="ps-1 transition-[height, margin-bottom, padding-top, padding-bottom] left-0 overflow-hidden pr-6 pb-6 pl-[3.75rem] duration-300 ease-in-out">
-              Create, retrieve, update, delete and list companies pieces.
+              Create, read, update, delete and list company elements.
             </div>
           </li>
           <li data-te-stepper-step-ref class="relative h-fit">
@@ -67,7 +67,7 @@
             <div
               data-te-stepper-content-ref
               class="ps-1 transition-[height, margin-bottom, padding-top, padding-bottom] left-0 overflow-hidden pr-6 pb-6 pl-[3.75rem] duration-300 ease-in-out">
-              Each one of the leads can be assigned to an agent just like each document being assigned to a lead, it is representing.
+              Each one of the leads can be assigned to an agent, just like each document being assigned to a lead it is representing.
             </div>
           </li>
         </ul>
@@ -77,29 +77,29 @@
 
 <!-- Section: Login -->
   <section class="bg-white dark:bg-transparent-100">
-      <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-          <div class="mr-auto place-self-center lg:col-span-7">
-              <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Ready-to-go</h1>
-              <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                Start your journey right after registration. With a lack of time it would be the best solution
-                to save energy and stay tunned on meetings, watch the company updates and operate with documents.
-              </p>
-              
-              {% if request.user.is_authenticated %}
-              <a href="{% url 'leads:lead-list' %}" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-black text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                  Leads
-              </a>
-              {% else %}
-              <a href="{% url 'login' %}" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                  Sign in
-                  <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-              </a>
-              {% endif %}
-          </div>
-          <div class="hidden lg:mt-0 lg:col-span-5 lg:flex md:w-128 md:h-128 mg:w-64 mg:h-64">
-              <img src="{% static 'images\ops.png' %}" alt="documents.png">
-          </div>                
-      </div>
+    <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+        <div class="mr-auto place-self-center lg:col-span-7">
+            <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Ready-to-go</h1>
+            <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+              Start your journey right after registration. With a lack of time it would be the best solution
+              to save energy and stay tunned on meetings, watch the company updates and operate with documents library.
+            </p>
+            
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'leads:lead-list' %}" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-black text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                Leads
+            </a>
+            {% else %}
+            <a href="{% url 'login' %}" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                Sign in
+                <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </a>
+            {% endif %}
+        </div>
+        <div class="hidden lg:mt-0 lg:col-span-5 lg:flex md:w-128 md:h-128 mg:w-64 mg:h-64">
+            <img src="{% static 'images\ops.png' %}" alt="documents.png">
+        </div>                
+    </div>
   </section>
 
 <!-- Section: Technologies -->
@@ -115,7 +115,7 @@
                 style="background: hsla(0, 0%, 100%, 0.55); backdrop-filter: blur(30px)"
               >
                 <h2 class="text-3xl font-bold mb-12">
-                  Using powerful instruments<br />
+                  Using powerful instruments<br/>
                   <span class="">To provide quality</span>
                 </h2>
                 <hr />
@@ -174,7 +174,7 @@
 
 <!-- Section: Why is it so great? -->
   <div class="container my-24 px-6 mx-auto">
-  <section class="mb-32 text-gray-800 text-center">
+    <section class="mb-32 text-gray-800 text-center">
     <h2 class="text-3xl font-bold mb-20">Why is it so great?</h2>
     <div class="grid lg:gap-x-12 lg:grid-cols-3">
       <div class="mb-12 lg:mb-0">
@@ -192,8 +192,8 @@
                 <h5 class="text-lg font-semibold mb-4">Support 24/7</h5>
                 <p>
                   Our customers gets an 24/7 online support for technical moments or to
-                  be updated with an useful information. Only quality service, good communication
-                  and understandings between us and our awesome clients.
+                  be updated with the useful information. Only quality service, good communication
+                  and understandings between us and you.
                 </p>
               </div>
             </div>
@@ -215,7 +215,7 @@
                 <p>
                   The site is being designed like a watches, so we know, that everything is
                   fine. Othervice - we take any hints and propositions from our customers to
-                  create a better place to work.
+                  create a better workplace.
                 </p>
               </div>
             </div>
@@ -236,7 +236,7 @@
                 <p>
                   Have you ever heard of the speed of the sound? Maybe, you know the speed of the link?
                   Our site is breaking the logic of this world and working as fast as it possibly cannot.
-                  How is that? We don't know surely, but we heard that out provider is Sonic himself :smiley
+                  How is that? We don't know surely, but we heard that out provider is Sonic himself =)
                 </p>
               </div>
             </div>

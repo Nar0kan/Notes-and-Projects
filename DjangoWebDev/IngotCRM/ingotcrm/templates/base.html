@@ -18,17 +18,19 @@
     {% endblock %}
   </head>
   <body>
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto flex flex-col h-screen justify-between ">
       {% include 'navbar.html' %}
+
       {% block content %}
       {% endblock content %}
+
       {% block js %}
       {% endblock js %}
+
+      {% include 'footer.html' %}
+  
     </div>
     {% include "scripts.html" %}
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
   </body>
-  <footer>
-    {% include 'footer.html' %}
-  </footer>
 </html>
