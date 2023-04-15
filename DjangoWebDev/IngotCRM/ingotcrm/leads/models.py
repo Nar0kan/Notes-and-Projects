@@ -62,7 +62,6 @@ class Document(models.Model):
     description = models.TextField()
     is_secret = models.BooleanField(default=False)
     file = models.FileField(verbose_name=title, validators=[validate_file, ], null=False, blank=False, upload_to="media/")
-    #file = ContentTypeRestrictedFileField(verbose_name=title, content_types=['application/txt', 'application/pdf', 'application/docx', 'application/doc'], max_upload_size=5242880, null=False, blank=False, upload_to="media/")
     date_added = models.DateTimeField(auto_now_add=True)
 
     lead = models.ForeignKey("Lead", null=False, blank=False, on_delete=models.CASCADE)
@@ -70,13 +69,15 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def delete(self, *args, **kwargs):
+        self.file.delete()
+        super().delete(*args, **kwargs)
 
 
 def postUserCreatedSignal(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
-
-
 post_save.connect(postUserCreatedSignal, sender=User)
 
 

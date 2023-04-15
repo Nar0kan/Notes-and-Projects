@@ -14,22 +14,24 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     {% block head %}
-    {% endblock %}
+    {% endblock head %}
   </head>
+
   <body>
-    <div class="max-w-7xl mx-auto flex flex-col h-screen justify-between ">
-      {% include 'navbar.html' %}
-
-      {% block content %}
-      {% endblock content %}
-
-      {% block js %}
-      {% endblock js %}
+    {% include 'navbar.html' %}
+    <div class="max-w-7xl mx-auto flex flex-col h-screen justify-between">
+      <div>
+        {% block content %}
+        {% endblock content %}
+      </div>
 
       {% include 'footer.html' %}
-  
     </div>
+    {% block js %}
+    {% endblock js %}
+    
     {% include "scripts.html" %}
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
   </body>

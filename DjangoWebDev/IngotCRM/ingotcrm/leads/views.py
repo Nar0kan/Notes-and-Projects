@@ -416,6 +416,7 @@ class DocumentUpdateView(LoginRequiredMixin, UpdateView):
 class DocumentDeleteView(OrganisorRequiredMixin, DeleteView):
     model = Document
     template_name = "document_delete.html"
+    context_object_name = "document"
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()

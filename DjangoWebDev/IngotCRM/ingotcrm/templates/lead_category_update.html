@@ -3,19 +3,18 @@
 
 {% block content %}
   <h1 class="sm:text-3xl text-2xl font-medium mb-1 mt-5 text-center text-gray-900">
-    Change the category for {{ lead.first_name }} {{ lead.last_name }} lead
+    Change the category for '{{ lead.first_name }} {{ lead.last_name }}' lead
   </h1>
-  <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
+  <h1 class="sm:text-3xl text-2xl font-medium title-font pb-2 mb-4 border-b-2 border-orange-500 text-gray-900">
   <b/>
   </h1>
-  <br/><hr/>
 
-<div class="max-w-lg mx-auto align-center mt-10">
-  <form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="flex mx-auto mt-10 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-cyan-500 hover:text-black rounded text-lg">Submit</button>
-    <br/>
-  </form>
-</div>
+  <div class="max-w-lg mx-auto align-center mt-10">
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="flex mx-auto mt-10 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-cyan-500 hover:text-black rounded text-lg">Submit</button>
+      <br/>
+    </form>
+  </div>
 {% endblock content %}
