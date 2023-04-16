@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect, reverse
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
+from django.shortcuts import render, redirect, reverse
 from django.views.generic import (
     TemplateView, ListView, DetailView, 
     CreateView, DeleteView, UpdateView, FormView)
@@ -11,7 +11,8 @@ from .models import Lead, Agent, Category, Document
 from .forms import (
     LeadForm, LeadModelForm,
     CustomUserCreationForm, AssignAgentForm,
-    LeadCategoryUpdateForm, UploadDocumentModelForm, )
+    LeadCategoryUpdateForm, UploadDocumentModelForm,
+    )
 from .filters import DocumentFilter
 from agents.mixins import OrganisorRequiredMixin
 
@@ -33,21 +34,24 @@ class PricingPageView(TemplateView):
 
 
 class LeadListView(LoginRequiredMixin, ListView):
+    queryset = Lead.objects.all()
     template_name = "lead_list.html"
     context_object_name = "leads"
+
     paginate_by = LEADS_PER_PAGE
 
     def get_queryset(self):
         user = self.request.user
+        
         if user.is_organisor:
             queryset = Lead.objects.filter(organisation=user.userprofile, agent__isnull=False)
         else:
             queryset = Lead.objects.filter(organisation=user.agent.organisation, agent__isnull=False)
             queryset = Lead.objects.filter(agent__user=user)
         
-        queryset.order_by("-date_added")
+        ordered_qs = queryset.order_by("-date_added")
 
-        return queryset
+        return ordered_qs
     
     def get_context_data(self, **kwargs):
         user = self.request.user
@@ -116,6 +120,7 @@ class LeadUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         user = self.request.user
+        
         if user.is_organisor:
             queryset = Lead.objects.filter(organisation=user.userprofile)
         else:
@@ -222,17 +227,6 @@ class CategoryListView(LoginRequiredMixin, ListView):
 class CategoryDetailView(LoginRequiredMixin, DetailView):
     template_name = "category_detail.html"
     context_object_name = "category"
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(CategoryDetailView, self).get_context_data(**kwargs)
-
-    #     #queryset = Lead.objects.filter(category=self.get_object())
-    #     queryset = self.get_object().lead_cat.all()   # Called by the related name in ForeignKey Model obj.
-
-    #     context.update({
-    #         "leads": queryset
-    #     })
-    #     return context
     
     def get_queryset(self):
         user = self.request.user
@@ -321,7 +315,7 @@ class DocumentListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = self.filterset.form
-        return context 
+        return context
 
 
 class DocumentDetailView(LoginRequiredMixin, DetailView):

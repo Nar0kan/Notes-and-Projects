@@ -75,6 +75,17 @@ class Document(models.Model):
         super().delete(*args, **kwargs)
 
 
+class LeadComment(models.Model):
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    lead = models.ForeignKey("Lead", null=False, blank=False, related_name="lead_com", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.lead.email} - {self.author.username}"
+
+
 def postUserCreatedSignal(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
