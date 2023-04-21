@@ -14,29 +14,31 @@
     </div>
   </div>
 
-  <h1 class="title-font sm:text-2xl text-4xl text-center font-medium text-black text-b mt-5 mb-3 pt-5 border-b-4 border-yellow-200">{{ category.name }}</h1>
+  <h1 class="title-font sm:text-2xl text-4xl text-center font-medium text-black text-b mt-5 mb-3 pt-5 pb-2 border-b-4 border-gray-200">{{ category.name }}</h1>
   <ul role="list" class="p-6 divide-y divide-slate-200">
-  
+  {% if category.lead_cat.all %}
     {% for lead in category.lead_cat.all %}
-    <a href="{% url 'leads:lead-detail' lead.pk %}">
-      <li class="flex pb-5 pt-5 ml-5 py-4 first:pt-0 last:pb-0 border-2 border-orange-300 border-transparent-90 hover:border-2 hover:border-blue-600 mb-3 px-5">
-          {% if lead.photo %}
-            <img src="{{ lead.photo.url }}" alt="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" style="border-radius: 50%;"/>
-          {% else %}
-            <img src="{% static 'images\UserPhoto.jpg' %}" alt="Photo" class="h-12 w-12" style="border-radius: 50%;"/>
-          {% endif %}
-        
-        <div class="ml-3 overflow-hidden">
-          <p class="text-sm font-medium text-slate-900">
-            
-              <h3>{{ lead.first_name }} {{ lead.last_name }}</h3><h5 class="mr-9 text-gray-400"><h5>
-            
-          </p>
-          <p class="text-sm text-slate-500 truncate">{{ lead.email }}</p>
-        </div>
-      </li>
-    </a>
-  
-  {% endfor %}
+      <a href="{% url 'leads:lead-detail' lead.pk %}">
+        <li class="flex pb-5 pt-5 ml-5 py-4 first:pt-0 last:pb-0 hover:border-l-2 hover:border-blue-300 mb-3 px-5">
+            {% if lead.photo %}
+              <img src="{{ lead.photo.url }}" alt="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" style="border-radius: 50%;"/>
+            {% else %}
+              <img src="{% static 'images\UserPhoto.jpg' %}" alt="Photo" class="h-12 w-12" style="border-radius: 50%;"/>
+            {% endif %}
+          
+          <div class="ml-3 overflow-hidden">
+            <p class="text-sm font-medium text-slate-900">
+              
+                <h3>{{ lead.first_name }} {{ lead.last_name }}</h3><h5 class="mr-9 text-gray-400"><h5>
+              
+            </p>
+            <p class="text-sm text-slate-500 truncate">{{ lead.email }}</p>
+          </div>
+        </li>
+      </a>
+    {% endfor %}
+  {% else %}
+    <p class="text-sm font-medium text-slate-900"><h3>No matches</h3><h5 class="mr-9 text-gray-400"><h5></p>
+  {% endif %}
     
 {% endblock content %}

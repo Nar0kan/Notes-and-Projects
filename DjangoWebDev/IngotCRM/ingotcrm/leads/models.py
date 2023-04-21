@@ -61,7 +61,7 @@ class Document(models.Model):
     title = models.CharField(max_length=200, unique=True)
     description = models.TextField()
     is_secret = models.BooleanField(default=False)
-    file = models.FileField(verbose_name=title, validators=[validate_file, ], null=False, blank=False, upload_to="media/")
+    file = models.FileField(validators=[validate_file, ], null=False, blank=False, upload_to="media/")
     date_added = models.DateTimeField(auto_now_add=True)
 
     lead = models.ForeignKey("Lead", null=False, blank=False, on_delete=models.CASCADE)

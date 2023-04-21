@@ -27,6 +27,7 @@ urlpatterns = [
 
 ]
 
+handler404 = 'leads.views.Error404View'
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

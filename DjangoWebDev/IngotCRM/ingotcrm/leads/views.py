@@ -1,17 +1,19 @@
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import (
     TemplateView, ListView, DetailView, 
     CreateView, DeleteView, UpdateView, FormView)
+from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Lead, Agent, Category, Document
+from .models import Lead, Agent, Category, Document, LeadComment
 from .forms import (
     LeadForm, LeadModelForm,
     CustomUserCreationForm, AssignAgentForm,
     LeadCategoryUpdateForm, UploadDocumentModelForm,
+    LeadCommentForm,
     )
 from .filters import DocumentFilter
 from agents.mixins import OrganisorRequiredMixin
@@ -19,6 +21,10 @@ from agents.mixins import OrganisorRequiredMixin
 
 DOCUMENTS_PER_PAGE = 2
 LEADS_PER_PAGE = 2
+
+
+def Error404View(request, exception):
+    return render(request, '404.html', {})
 
 
 class LandingPageView(TemplateView):
@@ -69,7 +75,24 @@ class LeadListView(LoginRequiredMixin, ListView):
 class LeadDetailView(LoginRequiredMixin, DetailView):
     template_name = "lead_details.html"
     queryset = Lead.objects.all()
+    form = LeadCommentForm
     context_object_name = "lead"
+
+    def post(self, request, *args, **kwargs):
+        form = LeadCommentForm(request.POST)
+
+        if form.is_valid():
+            lead = self.get_object()
+            form.instance.author = request.user
+            form.instance.lead = lead #Lead.objects.get(id=self.kwargs['pk'])
+            form.save()
+
+            return redirect(reverse("leads:lead-detail", kwargs={"pk": lead.pk}))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.form
+        return context
 
 
 class LeadCreateView(LoginRequiredMixin, CreateView):

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lead, User, Agent, Document, Category, UserProfile
+from .models import Lead, User, Agent, Document, Category, UserProfile, LeadComment
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 
 
@@ -88,3 +88,15 @@ class UploadDocumentModelForm(forms.ModelForm):
             leads = Lead.objects.filter(organisation=organisation)
             self.fields['lead'].queryset = leads
 
+
+class LeadCommentForm(forms.ModelForm):
+    text = forms.CharField(widget=forms.Textarea(attrs={
+        "class": "md-textarea form-control",
+        "placeholder": "Write your comment here...",
+        "rows": '4',
+        }))
+    class Meta:
+        model = LeadComment
+        fields = [
+            "text",
+        ]
