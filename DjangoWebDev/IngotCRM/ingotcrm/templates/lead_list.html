@@ -3,8 +3,9 @@
 
 {% block content %}
   <div class="flex justify-center">
-    <p class="text-5xl text-black mr-5 mt-5 mb-10">Lead list</p>
+    <p class="text-5xl text-extrabold mr-5 mt-5 mb-10 text-black dark:text-white">Lead list</p>
   </div>
+
   <div class="flex grid grid-cols-6 gap-2 mx-10 border-b-4 border-yellow-300 border-transparent-90 space-x-2">
     <div class="col-start-2 col-end-6 sm:col-start-1 sm:col-end-4 mb-2">
       <a  href="{% url 'leads:lead-create' %}"><button type="button" class="inline-block px-6 pt-2 pb-2 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex align-center">
@@ -16,12 +17,12 @@
     </div>
     {% if unassigned_leads.exists %}
       <div class="col-start-1 col-end-5 md:col-start-5 md:col-end-8 lg:col-start-6 lg:col-end-9 col-span-2 mb-2">
-        <button data-dropdown-toggle="dropdownUnassignedLeads" id="dropdownUnassignedLeadsButton" data-dropdown-toggle="dropdown" class="block flex justify-center text-xl text-black dark:text-gray-900 truncate font-medium py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent inline-flex" type="button">
+        <button data-dropdown-toggle="dropdownUnassignedLeads" id="dropdownUnassignedLeadsButton" data-dropdown-toggle="dropdown" class="block flex justify-center text-xl truncate font-medium py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 text-black dark:text-gray-100 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent inline-flex" type="button">
           Unassigned leads
           <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
-        <div id="dropdownUnassignedLeads" class="z-10 hidden hover:backdrop-blur-lg bg-white divide-y divide-gray-100 rounded-lg shadow w-half dark:bg-gray-700">
-          <ul class="py-2 p-6 divide-y divide-slate-200 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUnassignedLeadsButton">
+        <div id="dropdownUnassignedLeads" class="z-10 hidden hover:backdrop-blur-lg bg-white divide-y divide-gray-100 rounded-lg shadow w-half dark:bg-gray-700 rounded">
+          <ul class="py-2 p-6 divide-y divide-slate-200 text-sm text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-700" aria-labelledby="dropdownUnassignedLeadsButton">
             {% for lead in unassigned_leads %}
             <div class="" data-carousel="static">
               <a href="{% url 'leads:assign-agent' lead.pk %}">
@@ -31,7 +32,7 @@
                     <p class="text-sm font-medium text-slate-900">
                         <h3>{{ lead.first_name }} {{ lead.last_name }}</h3>
                     </p>
-                    <h5 class="ml-12 text-sm text-slate-300">Created at {{ lead.date_added }}</h5>
+                    <h5 class="ml-12 text-sm text-slate-500 dark:text-slate-300">Created at {{ lead.date_added }}</h5>
                   </div>
                 </li>
               </a>
@@ -49,9 +50,9 @@
       <li class="flex py-4 first:pt-0 last:pb-0">
         <a href="{% url 'leads:lead-detail' lead.pk %}">
           {% if lead.photo %}
-            <img src="{{ lead.photo.url }}" alt="{% static 'images\UserPhoto.jpg' %}" class="h-12 w-12" style="border-radius: 50%;"/>
+            <img src="{{ lead.photo.url }}" alt="{{lead.first_name}} {{lead.last_name}} profile" class="h-12 w-12" style="border-radius: 50%;"/>
           {% else %}
-            <img src="{% static 'images\UserPhoto.jpg' %}" alt="Photo" class="h-12 w-12" style="border-radius: 50%;"/>
+            <img src="{% static 'images\UserPhoto.jpg' %}" alt="Standart static profile" class="h-12 w-12" style="border-radius: 50%;"/>
           {% endif %}
         </a>
         <div class="ml-3 overflow-hidden">

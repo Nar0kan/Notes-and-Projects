@@ -1,6 +1,7 @@
 from django import forms
-from .models import Lead, User, Agent, Document, Category, UserProfile, LeadComment
-from django.contrib.auth.forms import UserCreationForm, UsernameField
+from crispy_forms.helper import FormHelper
+from .models import Lead, User, Agent, Document, Category, LeadComment
+from django.contrib.auth.forms import UserCreationForm, UsernameField, AuthenticationForm, PasswordChangeForm, PasswordResetForm
 
 
 class LeadModelForm(forms.ModelForm):
@@ -17,7 +18,7 @@ class LeadModelForm(forms.ModelForm):
             'category',
             'agent',
         )
-    
+
     def __init__(self, *args, **kwargs):
         organisation = kwargs.pop('organisation', None)
         super().__init__(*args, **kwargs)
@@ -28,6 +29,11 @@ class LeadModelForm(forms.ModelForm):
             
             agents = Agent.objects.filter(organisation=organisation)
             self.fields['agent'].queryset = agents
+        
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+        #self.helper.label_class = "text-black dark:text-white bg-yellow-500"
+        self.fields['photo'].label = 'Profile photo'
 
 
 class LeadForm(forms.Form):
@@ -41,6 +47,57 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ("username",)
         field_classes = {"username": UsernameField}
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+      
+        self.helper = FormHelper(self)
+
+        self.helper.form_show_labels = False
+
+        self.fields["username"].help_text = ''
+        self.fields['password1'].help_text = ''
+        self.fields['password2'].help_text = ''
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    class Meta:
+        model = User
+        fields = ("username", )
+        field_classes = {"username": UsernameField, }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+      
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    class Meta:
+        model = User
+        fields = ("old_password", "new_password1", "new_password2")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+
+        self.fields['new_password1'].help_text = ''
+        self.fields['new_password2'].help_text = ''
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+    class Meta:
+        model = User
+        fields = ("email", )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
 
 
 class AssignAgentForm(forms.Form):
