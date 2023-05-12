@@ -2,10 +2,10 @@
 {% load static %}
 
 {% block content %}
-<div class="bg-white font-semibold dark:text-white border-gray-200 dark:bg-[#474E68] dark:border-gray-700 round">
+<div class="bg-[#FCF1F1] font-semibold dark:text-white border-gray-200 dark:bg-[#474E68] dark:border-gray-700 round">
   <!-- Section: Introduction -->
     <section class="text-gray-600 body-font font-extrabold tracking-tight leading-none">
-      <div class="bg-gradient-to-b from-[#50577A] to-white dark:to-[#474E68] backdrop-opacity-60 backdrop-blur-sm backdrop-brightness-50 rounded border-b-4 border-white dark:border-0">
+      <div class="bg-gradient-to-b from-[#FFD5CD] dark:from-[#50577A] to-[#FCF1F1] dark:to-[#474E68] backdrop-opacity-60 backdrop-blur-sm backdrop-brightness-50 rounded">
         <div class="container mx-auto flex px-5 py-6 items-center justify-center flex-col">
           <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-4 border border-2 object-cover object-center rounded" alt="home.jpg" src="{% static 'images/home.jpg' %}">
           <div class="text-center lg:w-2/3 w-full">
@@ -29,7 +29,7 @@
                 <!-- Item 1 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <div class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                      <div class="rounded-lg shadow-lg h-full block bg-white font-semibold dark:text-white border-gray-200 dark:bg-[#6B728E] dark:border-gray-700">
+                      <div class="rounded-lg shadow-lg h-full block bg-[#F5EBE0] font-semibold dark:text-white border-gray-200 dark:bg-[#6B728E] dark:border-gray-700">
                         <div class="flex justify-center">
                               <div class="p-4 bg-blue-600 rounded-full shadow-lg inline-block mt-8">
                                 <svg class="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -54,7 +54,7 @@
                 <!-- Item 2 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <div class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                    <div class="rounded-lg shadow-lg h-full block bg-white font-semibold dark:text-white border-gray-200 dark:bg-[#6B728E] dark:border-gray-700">
+                    <div class="rounded-lg shadow-lg h-full block bg-[#F5EBE0] font-semibold dark:text-white border-gray-200 dark:bg-[#6B728E] dark:border-gray-700">
                       <div class="flex justify-center">
                         <div class="p-4 bg-blue-600 rounded-full shadow-lg inline-block mt-8">
                           <svg class="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -76,7 +76,7 @@
                 <!-- Item 3 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <div class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                    <div class="rounded-lg shadow-lg h-full block bg-white font-semibold dark:text-white border-gray-200 dark:bg-[#6B728E] dark:border-gray-700">
+                    <div class="rounded-lg shadow-lg h-full block bg-[#F5EBE0] font-semibold dark:text-white border-gray-200 dark:bg-[#6B728E] dark:border-gray-700">
                       <div class="flex justify-center">
                         <div class="p-4 bg-blue-600 rounded-full shadow-lg inline-block mt-8">
                           <svg class="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -97,7 +97,7 @@
                 <!-- Item 4 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <div class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                      <div class="rounded-lg shadow-lg h-full block bg-white font-semibold dark:text-white border-gray-200 dark:bg-[#6B728E] dark:border-gray-700">
+                      <div class="rounded-lg shadow-lg h-full block bg-[#F5EBE0] font-semibold dark:text-white border-gray-200 dark:bg-[#6B728E] dark:border-gray-700">
                         <div class="flex justify-center">
                               <div class="p-4 bg-blue-600 rounded-full shadow-lg inline-block mt-8">
                                 <svg class="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
@@ -151,7 +151,7 @@
               
               {% if request.user.is_authenticated %}
               <a href="{% url 'leads:lead-list' %}">
-                <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                <button class="relative items-center justify-center inline-flex p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:bg-gradient-to-br dark:from-green-400 dark:to-blue-600 dark:group-hover:from-green-400 dark:group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
                   <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-[#404258] rounded-md group-hover:bg-opacity-0">
                     Leads
                   </span>
@@ -159,7 +159,7 @@
               </a>
               {% else %}
               <a href="{% url 'login' %}">
-                <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                <button class="relative items-center justify-center inline-flex p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:bg-gradient-to-br dark:from-green-400 dark:to-blue-600 dark:group-hover:from-green-400 dark:group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
                   <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-[#404258] rounded-md group-hover:bg-opacity-0">
                   Sign in
                   <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>

@@ -21,13 +21,11 @@
     {% endblock head %}
   </head>
 
-  <body class="antialiased text-black dark:text-white bg-[#FCF1F1] dark:bg-[#404258]">
+  <body class="antialiased text-black dark:text-white bg-[#FFD5CD] dark:bg-[#404258]">
     {% include 'navbar.html' %}
     <div class="max-w-7xl mx-auto flex flex-col h-screen justify-between">
-      <div>
-        {% block content %}
-        {% endblock content %}
-      </div>
+      {% block content %}
+      {% endblock content %}
 
       {% include 'footer.html' %}
     </div>

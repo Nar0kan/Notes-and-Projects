@@ -2,12 +2,13 @@
 {% load static %}
 
 {% block content %}
+<div class="bg-[#FCF1F1] dark:bg-[#474E68] my-8 pb-24 pt-4">
     <div class="flex justify-center">
-        <p class="text-4xl md:text-6xl text-black dark:text-yellow-400 mr-5 mt-5 text-center text-extrabald">Agents</p>
+        <p class="text-4xl md:text-5xl text-black dark:text-white mr-5 mt-5 text-center text-extrabold">Agents</p>
     </div>
 
     
-    <div class="flex justify-items-left mx-10 border-b-4 border-yellow-300 border-transparent-90 pb-2 space-x-2">
+    <div class="flex justify-items-left mx-10 border-b-2 border-gray-200 dark:border-green-200 border-transparent-50 pb-2 space-x-2">
         <a href="{% url 'agents:agent-create' %}">
             <button type="button" class="inline-block px-6 pt-2 mt-6 pb-2 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out flex align-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-4">
@@ -32,10 +33,10 @@
                             {% endif %}
                             </circle>
                             <div class="ml-3 overflow-hidden">
-                                <p class="text-sm font-medium text-slate-900">
+                                <p class="text-sm font-medium text-black dark:text-white">
                                     <h3>{{ agent.user.first_name }} {{ agent.user.last_name }}</h3>
                                 </p>
-                                <p class="text-sm text-slate-500 truncate">{{ agent }}</p>
+                                <p class="text-sm text-gray-700 dark:text-gray-200 truncate">{{ agent }}</p>
                             </div>
                         </li>
                     </a>
@@ -43,4 +44,5 @@
             {% endfor %}
         </ul>
     </div>
+</div>
 {% endblock content %}

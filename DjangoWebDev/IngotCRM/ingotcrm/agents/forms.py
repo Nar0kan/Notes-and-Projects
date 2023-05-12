@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from leads.models import Agent, User
+from crispy_forms.helper import FormHelper
+
 
 USER = get_user_model()
 
@@ -17,6 +19,14 @@ class AgentCreateModelForm(forms.ModelForm):
             'position',
             'photo',
         )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+
+        self.fields['photo'].label = 'Profile photo'
 
 
 class AgentUpdateModelForm(forms.ModelForm):
@@ -28,6 +38,16 @@ class AgentUpdateModelForm(forms.ModelForm):
             'last_name',
             'position',
         )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+
+        self.fields['username'].help_text = ""
+        self.fields['first_name'].label = ""
+        self.fields['last_name'].label = ""
 
 
 class AgentProfileUpdateModelForm(forms.ModelForm):
@@ -40,3 +60,11 @@ class AgentProfileUpdateModelForm(forms.ModelForm):
             'phone_number',
             'photo',
         )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+        
+        self.fields['photo'].label = 'Profile photo'

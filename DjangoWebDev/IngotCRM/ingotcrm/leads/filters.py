@@ -1,20 +1,22 @@
 from django import forms
 from django.db.models import Q
 import django_filters
+from crispy_forms.helper import FormHelper
 
 from .models import Document
 
 
 class DocumentFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(
-        label='Title, lead or filename contains',
+        label='',
         lookup_expr='icontains',
         method='custom_filter',
         widget=forms.TextInput(attrs={'class': 'form-control'})
         )
 
-    data_added = django_filters.DateTimeFilter(
+    date_added = django_filters.DateTimeFilter(
         field_name='date_added',
+        label='',
         lookup_expr='lte',
         widget=forms.DateTimeInput(
             attrs={'type': 'date', 'class': 'form-control'}
@@ -22,6 +24,7 @@ class DocumentFilter(django_filters.FilterSet):
         )
     
     is_secret = django_filters.BooleanFilter(
+        label='',
         widget=forms.CheckboxInput()
         )
     
@@ -36,4 +39,5 @@ class DocumentFilter(django_filters.FilterSet):
     class Meta:
         model = Document
         fields = ['title', 'is_secret']
+
     

@@ -1,5 +1,9 @@
+from typing import Any, Dict, Mapping, Optional, Type, Union
 from django import forms
 from crispy_forms.helper import FormHelper
+from django.core.files.base import File
+from django.db.models.base import Model
+from django.forms.utils import ErrorList
 from .models import Lead, User, Agent, Document, Category, LeadComment
 from django.contrib.auth.forms import UserCreationForm, UsernameField, AuthenticationForm, PasswordChangeForm, PasswordResetForm
 
@@ -85,7 +89,9 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         self.helper.form_show_labels = False
 
         self.fields['new_password1'].help_text = ''
+        self.fields['new_password1'].label = ''
         self.fields['new_password2'].help_text = ''
+        self.fields['new_password2'].label = ''
 
 
 class CustomPasswordResetForm(PasswordResetForm):
@@ -124,6 +130,9 @@ class LeadCategoryUpdateForm(forms.ModelForm):
         if organisation:
             categories = Category.objects.filter(organisation=organisation)
             self.fields['category'].queryset = categories
+        
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
 
 
 class UploadDocumentModelForm(forms.ModelForm):
@@ -144,6 +153,9 @@ class UploadDocumentModelForm(forms.ModelForm):
         if organisation:
             leads = Lead.objects.filter(organisation=organisation)
             self.fields['lead'].queryset = leads
+        
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
 
 
 class LeadCommentForm(forms.ModelForm):
@@ -152,6 +164,8 @@ class LeadCommentForm(forms.ModelForm):
         "placeholder": "Write your comment here...",
         "rows": '4',
         }))
+    text.label = ""
+
     class Meta:
         model = LeadComment
         fields = [
