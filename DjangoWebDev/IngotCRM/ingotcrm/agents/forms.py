@@ -68,3 +68,24 @@ class AgentProfileUpdateModelForm(forms.ModelForm):
         self.helper.form_show_labels = False
         
         self.fields['photo'].label = 'Profile photo'
+
+
+class CustomaAgentUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            "username", 
+            "first_name", 
+            "last_name", 
+            "position", 
+            "photo"
+        )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+        
+        self.fields['photo'].label = 'Profile photo'
+        self.fields["username"].help_text = ''
