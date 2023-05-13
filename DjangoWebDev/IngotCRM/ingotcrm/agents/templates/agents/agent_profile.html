@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<section class="bg-[#FCF1F1] dark:bg-[#474E68] text-gray-600 body-font my-8">
+<section class="bg-[#FCF1F1] dark:bg-[#474E68] text-gray-600 body-font py-8 h-full">
   <div class="container px-5 py-24 mx-auto flex flex-col py-12">
     <div class="lg:w-4/6 mx-auto">
       <div class="flex flex-col sm:flex-row mt-10">
@@ -27,11 +27,12 @@
             </p>
           </div>
         </div>
-        <div class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l text-black dark:bg-gray-200 border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
+        <div class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l text-black dark:bg-gray-200 border-gray-200 dark:border-green-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
           <p class="mr-4 leading-relaxed text-lg font-medium mb-2">
             Information
             <br/>
-            <hr class="border-2 border-amber-500 hover:border-purple-500 drop-shadow-xl"/><br/>
+            <div class="border-2 border-gray-200 dark:border-green-200 drop-shadow-xl"/>
+            </div>
           </p>
           <p>Full name: {{ agent.first_name }} {{ agent.last_name }}</p>
           <p>Phone number: {{ agent.phone_number }}</p>

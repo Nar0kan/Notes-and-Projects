@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from leads.models import Agent, User
 from .mixins import OrganisorRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import AgentUpdateModelForm, AgentCreateModelForm, AgentProfileUpdateModelForm, CustomaAgentUpdateForm
+from .forms import AgentCreateModelForm, AgentProfileUpdateModelForm, CustomAgentUpdateForm
 from secrets import randbelow
 from crispy_forms.helper import FormHelper
 
@@ -63,7 +63,7 @@ class AgentDetailView(OrganisorRequiredMixin, generic.DetailView):
 
 class AgentUpdateView(OrganisorRequiredMixin, generic.UpdateView):
     template_name = "agents/agent_update.html"
-    form_class = CustomaAgentUpdateForm
+    form_class = CustomAgentUpdateForm
     context_object_name = "agent"
 
     def get_success_url(self) -> str:
@@ -77,6 +77,7 @@ class AgentUpdateView(OrganisorRequiredMixin, generic.UpdateView):
         initial['first_name'] = agent.user.first_name
         initial['last_name'] = agent.user.last_name
         initial['photo'] = agent.user.photo
+        initial['email'] = agent.user.email
       
         return initial
 
@@ -87,6 +88,7 @@ class AgentUpdateView(OrganisorRequiredMixin, generic.UpdateView):
         agent.user.last_name = form.cleaned_data['last_name']
         agent.user.position = form.cleaned_data['position']
         agent.user.photo = form.cleaned_data['photo']
+        agent.user.email = form.cleaned_data['email']
         agent.save()
         agent.user.save()
 

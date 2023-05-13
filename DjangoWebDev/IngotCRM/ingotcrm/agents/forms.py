@@ -18,6 +18,7 @@ class AgentCreateModelForm(forms.ModelForm):
             'phone_number',
             'position',
             'photo',
+            'email',
         )
     
     def __init__(self, *args, **kwargs):
@@ -27,27 +28,29 @@ class AgentCreateModelForm(forms.ModelForm):
         self.helper.form_show_labels = False
 
         self.fields['photo'].label = 'Profile photo'
+        self.fields["username"].help_text = ''
 
 
-class AgentUpdateModelForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = (
-            'username',
-            'first_name',
-            'last_name',
-            'position',
-        )
+# class AgentUpdateModelForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+#         fields = (
+#             'username',
+#             'first_name',
+#             'last_name',
+#             'position',
+#             'email',
+#         )
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
         
-        self.helper = FormHelper(self)
-        self.helper.form_show_labels = False
+#         self.helper = FormHelper(self)
+#         self.helper.form_show_labels = False
 
-        self.fields['username'].help_text = ""
-        self.fields['first_name'].label = ""
-        self.fields['last_name'].label = ""
+#         self.fields['username'].help_text = ""
+#         self.fields['first_name'].label = ""
+#         self.fields['last_name'].label = ""
 
 
 class AgentProfileUpdateModelForm(forms.ModelForm):
@@ -70,7 +73,7 @@ class AgentProfileUpdateModelForm(forms.ModelForm):
         self.fields['photo'].label = 'Profile photo'
 
 
-class CustomaAgentUpdateForm(forms.ModelForm):
+class CustomAgentUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = (
@@ -78,7 +81,8 @@ class CustomaAgentUpdateForm(forms.ModelForm):
             "first_name", 
             "last_name", 
             "position", 
-            "photo"
+            "photo",
+            "email",
         )
     
     def __init__(self, *args, **kwargs):
