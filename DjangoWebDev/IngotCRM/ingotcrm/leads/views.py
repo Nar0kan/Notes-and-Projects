@@ -1,26 +1,32 @@
 from django.core.mail import send_mail
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse, HttpResponseForbidden
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 from django.views.generic import (
-    TemplateView, ListView, DetailView, 
+    TemplateView, ListView, DetailView,
     CreateView, DeleteView, UpdateView, FormView)
-from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import (
+    LoginView, PasswordChangeView,
+    PasswordResetView, PasswordResetConfirmView,
+)
 
-from .models import Lead, Agent, Category, Document, LeadComment
-from .forms import (
-    LeadForm, LeadModelForm,
-    CustomUserCreationForm, AssignAgentForm,
-    LeadCategoryUpdateForm, UploadDocumentModelForm,
-    LeadCommentForm,
-    )
-from .filters import DocumentFilter
 from agents.mixins import OrganisorRequiredMixin
 
+from .models import (
+    Lead, Agent, Category, Document,
+)
+from .forms import (
+    LeadModelForm, CustomUserCreationForm, AssignAgentForm,
+    LeadCategoryUpdateForm, UploadDocumentModelForm,
+    LeadCommentForm, CustomAuthenticationForm,
+    CustomPasswordChangeForm, CustomPasswordResetForm,
+    CustomSetPasswordForm, 
+)
+from .filters import DocumentFilter
 
-DOCUMENTS_PER_PAGE = 2
-LEADS_PER_PAGE = 2
+
+DOCUMENTS_PER_PAGE = 5
+LEADS_PER_PAGE = 5
 
 
 def Error404View(request, exception):
@@ -314,6 +320,32 @@ class SignupView(CreateView):
         return reverse("login")
 
 
+class CustomLoginView(LoginView):
+    template_name = "registration/login.html"
+    form_class = CustomAuthenticationForm
+
+    def get_success_url(self) -> str:
+        return reverse("leads:lead-list")
+
+
+class CustomPasswordChangeView(PasswordChangeView, LoginRequiredMixin):
+    template_name = "registration/change_password.html"
+    form_class = CustomPasswordChangeForm
+
+
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = "registration/password_reset_email.html"
+    #success_url = reverse_lazy("password_reset_done")
+    template_name = "registration/password_reset_form.html"
+    form_class = CustomPasswordResetForm
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    form_class = CustomSetPasswordForm
+    success_url = reverse_lazy("password_reset_complete")
+    template_name = "registration/password_reset_confirm.html"
+
+
 class DocumentListView(LoginRequiredMixin, ListView):
     #queryset = Document.objects.all()
     template_name = "document_list.html"
@@ -430,7 +462,7 @@ class DocumentUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("leads:document-detail", kwargs={"pk": self.get_object().id})
 
 
-class DocumentDeleteView(OrganisorRequiredMixin, DeleteView):
+class DocumentDeleteView(LoginRequiredMixin, DeleteView):
     model = Document
     template_name = "document_delete.html"
     context_object_name = "document"

@@ -4,8 +4,14 @@ from crispy_forms.helper import FormHelper
 from django.core.files.base import File
 from django.db.models.base import Model
 from django.forms.utils import ErrorList
+
+from django.contrib.auth.forms import (
+    UserCreationForm, UsernameField, AuthenticationForm, 
+    PasswordChangeForm, PasswordResetForm, SetPasswordForm,
+    EmailField
+)
+
 from .models import Lead, User, Agent, Document, Category, LeadComment
-from django.contrib.auth.forms import UserCreationForm, UsernameField, AuthenticationForm, PasswordChangeForm, PasswordResetForm
 
 
 class LeadModelForm(forms.ModelForm):
@@ -49,8 +55,8 @@ class LeadForm(forms.Form):
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username",)
-        field_classes = {"username": UsernameField}
+        fields = ("username", "email", )
+        field_classes = {"username": UsernameField, "email": forms.EmailField(required=True)}
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -88,6 +94,8 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False
 
+        self.fields['old_password'].help_text = ''
+        self.fields['old_password'].label = ''
         self.fields['new_password1'].help_text = ''
         self.fields['new_password1'].label = ''
         self.fields['new_password2'].help_text = ''
@@ -104,6 +112,20 @@ class CustomPasswordResetForm(PasswordResetForm):
 
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False
+
+
+class CustomSetPasswordForm(SetPasswordForm):
+    class Meta:
+        model = User
+        fields = ("new_password1", "new_password2")
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = False
+
+        self.fields["new_password1"].help_text = ''
 
 
 class AssignAgentForm(forms.Form):

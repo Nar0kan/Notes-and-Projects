@@ -41,7 +41,7 @@
           </div>
           <div class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 dark:border-green-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
             <p class="mr-4 leading-relaxed text-xl text-black dark:text-white font-medium mb-2">
-              <button id="toggle-btn">Information</button>
+              <button id="toggle-information-btn">Information</button>
               <br/><hr class="border border-gray-200 dark:border-green-200 drop-shadow-xl"/><br/>
                 <div id="paragraphs" class="sm:w-2/3 sm:pl-8 ml-2 text-xm text-black dark:text-white">
                   <p><em>Category</em>:
@@ -62,7 +62,14 @@
 
                   <p><em>E-mail</em>:
                   {% if lead.email %}
-                    {{ lead.email }}
+                    <button id="email_button" class="underline" onclick="copyEmailToClipboard()">
+                      {{ lead.email }}
+                    </button>
+                    <div id="copyAlertEmail" class="flex ml-4 pr-2 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                      <div class="ml-3 text-sm font-small">
+                        The email was copied successfully.
+                      </div>
+                    </div>
                   {% else %}
                     unknown
                   {% endif %}
@@ -70,7 +77,14 @@
                   
                   <p><em>Phone number</em>: 
                     {% if lead.phone_number %}
-                      {{ lead.phone_number }}
+                      <button id="phone_button" class="underline" onclick="copyPhoneToClipboard()">
+                        {{ lead.phone_number }}
+                      </button>
+                      <div id="copyAlertPhone" class="flex ml-4 px-2 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                        <div class="text-sm font-small">
+                          The phone number was copied successfully.
+                        </div>
+                      </div>
                     {% else %}
                       unknown
                     {% endif %}
@@ -155,10 +169,23 @@
 {% endblock content %}
 
 
+{% block head %}
+  <style>
+    #copyAlertEmail {
+      display: none;
+    }
+
+    #copyAlertPhone {
+      display: none;
+    }
+  </style>
+{% endblock head %}
+
+
 {% block js %}
   <script>
 		$(document).ready(function(){
-			$('#toggle-btn').click(function(){
+			$('#toggle-information-btn').click(function(){
 				$('#paragraphs').toggle();
 				if ($(this).text() === 'Information') {
 					$(this).text('Show the information');
@@ -167,5 +194,54 @@
 				};
 			});
 		});
-	</script>
+
+    $(document).ready(function(){
+			$('#email_button').click(function(){
+				$('#copyAlertEmail').show();
+			});
+		});
+
+    function copyEmailToClipboard() {
+      var emailButton = document.getElementById("email_button");
+      var tempInput = document.createElement("input");
+
+      tempInput.value = emailButton.innerText;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+
+      var myElement = document.getElementById('copyAlertEmail');
+      myElement.style.display = 'block';
+
+      setTimeout(function() {
+        myElement.style.display = 'none';
+      }, 2000);
+    }
+        
+		$(document).ready(function(){
+			$('#phone_button').click(function(){
+				$('#copyAlertPhone').show();
+			});
+		});
+
+    function copyPhoneToClipboard() {
+      var emailButton = document.getElementById("phone_button");
+      var tempInput = document.createElement("input");
+      
+      tempInput.value = emailButton.innerText;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+
+      var myElement = document.getElementById('copyAlertPhone');
+      myElement.style.display = 'block';
+
+      setTimeout(function() {
+        myElement.style.display = 'none';
+      }, 2000);
+    }
+  </script>
+
 {% endblock js %}

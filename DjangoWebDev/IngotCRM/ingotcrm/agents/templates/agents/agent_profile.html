@@ -22,21 +22,43 @@
           <div class="flex flex-col items-center text-center justify-center">
             <h2 class="font-medium title-font mt-4 text-gray-900 text-lg">{{ agent.username }}</h2>
             <div class="w-12 h-1 bg-green-500 rounded mt-2 mb-3"></div>
-            <p class="text-base">
-              {{ agent.position }}
-            </p>
-          </div>
+              <p class="text-base">
+                {{ agent.position }}
+              </p>
+            </div>
         </div>
         <div class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l text-black dark:bg-gray-200 border-gray-200 dark:border-green-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
           <p class="mr-4 leading-relaxed text-lg font-medium mb-2">
-            Information
+            <button id="toggle-information-btn">Information</button>
             <br/>
-            <div class="border-2 border-gray-200 dark:border-green-200 drop-shadow-xl"/>
+            <div class="border-2 border-gray-200 dark:border-green-200 drop-shadow-xl mb-4"/>
             </div>
           </p>
-          <p>Full name: {{ agent.first_name }} {{ agent.last_name }}</p>
-          <p>Phone number: {{ agent.phone_number }}</p>
-          <p>Email: {{ agent.email }}</p>
+          <div id="paragraphs" class="sm:w-2/3 sm:pl-8 ml-2 text-xm text-black dark:text-white">
+            <p>Full name: {{ agent.first_name }} {{ agent.last_name }}</p>
+            
+            <p><em>Phone number</em>:
+              <button id="phone_button" class="underline" onclick="copyPhoneToClipboard()">
+                {{ agent.phone_number }}
+              </button>
+              <div id="copyAlertPhone" class="flex ml-4 px-2 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                <div class="text-sm font-small">
+                  The phone number was copied successfully.
+                </div>
+              </div>
+            </p>
+            
+            <p><em>Email</em>:
+              <button id="email_button" class="underline" onclick="copyEmailToClipboard()">
+                {{ agent.email }}
+              </button>
+              <div id="copyAlertEmail" class="flex ml-4 pr-2 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                <div class="ml-3 text-sm font-small">
+                  The email was copied successfully.
+                </div>
+              </div>
+            </p>
+          </div>
           <br/><br/>
           <p class="text-green-500 inline-flex items-center">
             <a href="{% url 'agents:profile-update' agent.pk %}"><button class="flex mx-auto ml-8 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg align-center" style="display: block; float: left;"> Update </button></a>
@@ -48,3 +70,85 @@
 </section>
 
 {% endblock content %}
+
+
+{% block head %}
+  <style>
+    #copyAlertEmail {
+      display: none;
+    }
+
+    #copyAlertPhone {
+      display: none;
+    }
+  </style>
+{% endblock head %}
+
+
+{% block js %}
+  <script>
+		$(document).ready(function(){
+			$('#toggle-information-btn').click(function(){
+				$('#paragraphs').toggle();
+				if ($(this).text() === 'Information') {
+					$(this).text('Show the information');
+				} else if ($(this).text() === 'Show the information') {
+					$(this).text('Information');
+				};
+			});
+		});
+
+
+    $(document).ready(function(){
+			$('#email_button').click(function(){
+				$('#copyAlertEmail').show();
+			});
+		});
+
+
+    function copyEmailToClipboard() {
+      var emailButton = document.getElementById("email_button");
+      var tempInput = document.createElement("input");
+
+      tempInput.value = emailButton.innerText;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+
+      var myElement = document.getElementById('copyAlertEmail');
+      myElement.style.display = 'block';
+
+      setTimeout(function() {
+        myElement.style.display = 'none';
+      }, 2000);
+    }
+
+
+		$(document).ready(function(){
+			$('#phone_button').click(function(){
+				$('#copyAlertPhone').show();
+			});
+		});
+
+
+    function copyPhoneToClipboard() {
+      var emailButton = document.getElementById("phone_button");
+      var tempInput = document.createElement("input");
+      
+      tempInput.value = emailButton.innerText;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+
+      var myElement = document.getElementById('copyAlertPhone');
+      myElement.style.display = 'block';
+
+      setTimeout(function() {
+        myElement.style.display = 'none';
+      }, 2000);
+    }
+  </script>
+
+{% endblock js %}
