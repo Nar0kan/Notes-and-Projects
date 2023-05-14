@@ -8,7 +8,6 @@ from django.forms.utils import ErrorList
 from django.contrib.auth.forms import (
     UserCreationForm, UsernameField, AuthenticationForm, 
     PasswordChangeForm, PasswordResetForm, SetPasswordForm,
-    EmailField
 )
 
 from .models import Lead, User, Agent, Document, Category, LeadComment
@@ -55,8 +54,8 @@ class LeadForm(forms.Form):
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "email", )
-        field_classes = {"username": UsernameField, "email": forms.EmailField(required=True)}
+        fields = ("username", )
+        field_classes = {"username": UsernameField, }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
