@@ -5,6 +5,6 @@
 <ul>
   <li><h3>Algorithms</h3> <h5>(*Frozen)</h5></li>
   <li><h3>DjangoWebDev</h3> <h5>(*In progress)</h5></li>
-  <li><h3>Think Python</h3> <h5>(*In progress)</h5></li>
+  <li><h3>Think Python</h3> <h5>(*Done)</h5></li>
   <li><h3>PasswordGenerator</h3> <h5>(*Done)</h5></li>
 </ul>
