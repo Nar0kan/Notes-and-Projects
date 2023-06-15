@@ -1,0 +1,25 @@
+header {
+	background: darkslategray;
+}
+
+h1 {
+	text-align: center;
+	color: pink;
+}
+
+h2 {
+	color: skyblue;
+}
+
+section {
+	background: darkgray;
+}
+
+a {
+	color: white;
+	background: lightslategray;
+}
+
+img {
+	display: none;
+}
