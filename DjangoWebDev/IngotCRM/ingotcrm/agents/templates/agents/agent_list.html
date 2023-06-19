@@ -27,9 +27,9 @@
                     <a href="{% url 'agents:agent-detail' agent.pk %}" class="mt-4 text-center bg-gray-100 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
                         <li class="px-6 py-6 mb-2 mt-2">
                             {% if agent.user.photo %}
-                                <img src="{{ agent.user.photo.url }}" alt="Profile" style="border-radius: 50%;">
+                                <img src="{{ agent.user.photo.url }}" alt="Profile picture" style="width: 150px; height: 150px; border-radius: 50%;">
                             {% else %}
-                                <img src="{% static 'images/UserPhoto.jpg' %}" style="border-radius: 50%;">
+                                <img src="{% static 'images/UserPhoto.jpg' %}" alt="Profile picture" style="width: 150px; height: 150px; border-radius: 50%;">
                             {% endif %}
                             </circle>
                             <div class="ml-3 overflow-hidden">

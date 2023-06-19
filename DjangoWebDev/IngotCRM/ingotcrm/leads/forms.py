@@ -173,10 +173,12 @@ class UploadDocumentModelForm(forms.ModelForm):
         
         if organisation:
             leads = Lead.objects.filter(organisation=organisation)
-            self.fields['lead'].queryset = leads
+            self.fields['leads'].queryset = leads
         
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False
+        self.fields['file'].label = 'File'
+        self.fields['file'].help_text = ''
 
 
 class LeadCommentForm(forms.ModelForm):
