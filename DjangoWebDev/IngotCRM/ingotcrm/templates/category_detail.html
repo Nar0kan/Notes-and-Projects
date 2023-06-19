@@ -30,18 +30,18 @@
             {% endif %}
           
           <div class="ml-3 overflow-hidden">
-            <p class="text-sm font-medium text-slate-900">
+            <p class="text-sm font-medium text-black dark:text-white">
               
                 <h3>{{ lead.first_name }} {{ lead.last_name }}</h3><h5 class="mr-9 text-gray-400"><h5>
               
             </p>
-            <p class="text-sm text-slate-500 truncate">{{ lead.email }}</p>
+            <p class="text-sm truncate text-black dark:text-white">{{ lead.email }}</p>
           </div>
         </li>
       </a>
     {% endfor %}
   {% else %}
-    <p class="text-sm font-medium text-slate-900 border-0"><h3>No matches</h3><h5 class="mr-9 text-gray-400"><h5></p>
+    <p class="text-sm font-medium text-black dark:text-white border-0"><h3>No matches</h3><h5 class="mr-9 text-gray-400"><h5></p>
   {% endif %}
 </div>
     

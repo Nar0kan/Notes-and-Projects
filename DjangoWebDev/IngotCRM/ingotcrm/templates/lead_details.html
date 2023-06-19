@@ -148,7 +148,7 @@
               {% for comment in lead.lead_com.all|slice:"0:3" %}
               <div class="grid grid-cols-5 sm:grid-cols-6 mb-2 p-6 bg-white border border-gray-200 dark:border-green-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <div class="col col-span-2">
-                  <h3 class="sm:w-[50%] text-center text-xm border-b-2 text-black dark:text-white"><strong>{{ comment.author }}</strong></h3><h6><small> {{ comment.date_added }} </small></h6>
+                  <h3 class="sm:w-[50%] text-center text-xm border-b-2 text-black dark:text-white"><strong>{{ comment.author }}</strong></h3><h6><small class="text-black dark:text-white"> {{ comment.date_added }} </small></h6>
                 </div>
                 <div class="break-words col col-span-3 sm:col-span-4 ml-2 border-l-4 text-left pl-4 border-green-300 border-transrapent-90">
                   <p rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">

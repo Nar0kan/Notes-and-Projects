@@ -76,6 +76,7 @@ class AgentUpdateView(OrganisorRequiredMixin, generic.UpdateView):
         initial['username'] = agent.user.username
         initial['first_name'] = agent.user.first_name
         initial['last_name'] = agent.user.last_name
+        initial['position'] = agent.user.position
         initial['photo'] = agent.user.photo
         initial['email'] = agent.user.email
       
