@@ -4,7 +4,8 @@ from leads.views import (
     LandingPageView, AboutPageView, 
     PricingPageView,  SignupView, 
     CustomLoginView, CustomPasswordChangeView, 
-    CustomPasswordResetView, CustomPasswordResetConfirmView
+    CustomPasswordResetView, CustomPasswordResetConfirmView,
+    DonateView, 
     )
 from django.conf import settings
 from django.contrib.auth.views import (
@@ -31,6 +32,7 @@ urlpatterns = [
     path('agents/', include('agents.urls', namespace='agents')),
     path('change_password/', CustomPasswordChangeView.as_view(), name='change_password'),
     path('password_change_done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
+    path('donate/', DonateView, name='donate'),
 
 ]
 

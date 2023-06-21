@@ -476,3 +476,8 @@ class DocumentDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("leads:document-list")
+
+
+def DonateView(request):
+    context = {}
+    return render(request, 'donate.html', context)

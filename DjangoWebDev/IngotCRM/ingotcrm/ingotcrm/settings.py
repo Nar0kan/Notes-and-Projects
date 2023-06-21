@@ -140,3 +140,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# For 3rd apps to open own windows (paypal)
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
