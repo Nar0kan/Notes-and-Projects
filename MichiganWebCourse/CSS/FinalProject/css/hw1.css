@@ -76,11 +76,15 @@ nav a:first-letter {
 }
 
 table {
-	font-size: 18px;
+	font-size: 22px;
 	font-family: "georgia" "sans-serif";
-	background: #777777;
-	font-style: italic;
+	font-style: strong;
 	border-radius: 10px;
+	background: #373737;
+	background: -moz-linear-gradient(top, #F7F7F7 25%, #237323 150%);
+	background: -webkit-linear-gradient(top, #F7F7F7 25%, #237323 150%);
+	background: -o-linear-gradient(top, #F7F7F7 25%, #237323 150%);
+	background: linear-gradient(top, #F7F7F7 25%, #237323 150%);
 }
 
 th {
@@ -91,14 +95,16 @@ th {
 	border-color: #181818;
 	border-radius: 5px 5px 0px 0px;
 	background: #56AF56;
-	color: #F8F8F8;
+
+	color: #030403;
 }
 
 td {
-	color: #C5A892;
+	color: #100912;
 	padding: 2px 4px;
-	background: #102020;
+	background: #CEFBAC;
 	font-family: "arial" "georgia";
+	font-size: 20px;
 	border-style: groove;
 	border-radius: 12px;
 }
@@ -108,12 +114,16 @@ tr th {
 	font-size: 20px;
 }
 
-tr td {
-	opacity: .6;
+table tr {
+	opacity: .79;
 	transition: 2s easy;
 }
 
-tr td:hover {
+table tr:first-child {
+	opacity: 1;
+}
+
+tr:hover {
 	opacity: 1;
 }
 
