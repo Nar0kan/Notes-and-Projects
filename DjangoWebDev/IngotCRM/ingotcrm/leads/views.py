@@ -1,4 +1,5 @@
 from django.core.mail import send_mail
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import (
@@ -479,5 +480,46 @@ class DocumentDeleteView(LoginRequiredMixin, DeleteView):
 
 
 def DonateView(request):
-    context = {}
+    context = {'client_id': settings.PAYPAL_RECEIVER_ID}
     return render(request, 'donate.html', context)
+
+
+# import uuid
+
+# from django.contrib import messages
+# from paypal.standard.forms import PayPalPaymentsForm
+
+# from leads.models import Rights, Order
+
+
+# def OrderView(request):
+#     user = self.request.user
+
+#     if not user.is_organisor:
+#         return redirect('landing')
+
+#     host = request.get_host()
+
+#     paypal_dict = {
+#         'business': settings.PAYPAL_RECEIVER_EMAIL,
+#         'amount': '20.00',
+#         'item_name': 'Subscription order',
+#         'invoice': str(uuid.uuid4()),
+#         'currency_code': 'USD',
+#         'notify_url': f'http://{host}{reverse("paypal-ipn")}',
+#         'return_url': f'http://{host}{reverse("leads:paypal-return")}',
+#         'cancel_return': f'http://{host}{reverse("leads:paypal-cancel")}',
+#     }
+#     form = PayPalPaymentsForm(initial=paypal_dict)
+#     context = {'form': form}
+#     return render(request, 'order_page.html', context)
+
+
+# def paypal_return(request):
+#     messages.success(request, 'You have successfully made a payment.')
+#     return redirect('leads:order_page')
+
+
+# def paypal_cancel(request):
+#     messages.error(request, 'Your order has been cancelled!')
+#     return redirect('leads:order_page')

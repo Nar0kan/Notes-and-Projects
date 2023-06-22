@@ -23,6 +23,26 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+# class Rights(models.Model):
+#     organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+#     level = models.CharField(default="free", max_length=100)
+#     team_size = models.IntegerField(default=5)
+#     individual_configuration = models.BooleanField(default=False)
+#     premium_support = models.DateTimeField(auto_now_add=True)
+#     price = models.FloatField(default=00.00, max_length=100)
+
+#     def __str__(self):
+#         return f"{self.level}"
+
+
+# class Order(models.Model):
+#     rights = models.ForeignKey(Rights, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return f"{self.rights.level}, {self.rights.organisation}"
+
+
 class Lead(models.Model):
     first_name = models.CharField(max_length=28)
     last_name = models.CharField(max_length=28)
@@ -88,7 +108,8 @@ class LeadComment(models.Model):
 
 def postUserCreatedSignal(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        user = UserProfile.objects.create(user=instance)
+
 post_save.connect(postUserCreatedSignal, sender=User)
 
 

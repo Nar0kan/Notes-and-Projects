@@ -6,7 +6,8 @@ from leads.views import (
     CustomLoginView, CustomPasswordChangeView, 
     CustomPasswordResetView, CustomPasswordResetConfirmView,
     DonateView, 
-    )
+)
+
 from django.conf import settings
 from django.contrib.auth.views import (
     LogoutView, 
@@ -33,7 +34,8 @@ urlpatterns = [
     path('change_password/', CustomPasswordChangeView.as_view(), name='change_password'),
     path('password_change_done/', PasswordChangeDoneView.as_view(), name='password_change_done'),
     path('donate/', DonateView, name='donate'),
-
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    path('ecom/', include('ecom.urls')),
 ]
 
 handler404 = 'leads.views.Error404View'

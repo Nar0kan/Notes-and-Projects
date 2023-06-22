@@ -16,23 +16,28 @@ if READ_DOT_ENV_FILE:
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', 'https://efa7-195-46-35-226.ngrok-free.app']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'leads',
+    'agents',
+    'ecom.apps.EcomConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'leads',
-    'agents',
+
     'crispy_forms',
     'crispy_tailwind',
     'future',
     'django_filters',
+    'paypal.standard.ipn',
+
 ]
 
 MIDDLEWARE = [
@@ -141,5 +146,19 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-# For 3rd apps to open own windows (paypal)
+
+# PAYPAL SETTINGS
+
+# For 3rd apps to open own windows (paypal window for donations)
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+
+# For django-paypal
+PAYPAL_TEST = True
+
+PAYPAL_RECEIVER_EMAIL = env('PAYPAL_RECEIVER_EMAIL')
+
+PAYPAL_RECEIVER_ID = env('PAYPAL_RECEIVER_ID')
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://efa7-195-46-35-226.ngrok-free.app'
+]
