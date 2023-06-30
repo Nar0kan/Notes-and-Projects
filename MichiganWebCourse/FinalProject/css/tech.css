@@ -1,10 +1,13 @@
 /* FOR MOBILE VIEW */
+body {
+  overflow-x: hidden;
+}
 
 .top_nav {
 	display: block;
 	background: #594545aa;
 	color: #FFF8EA;
-	font-size: 48px;
+	font-size: 24px;
 	font-family: "sans-serif", arial;
 }
 
@@ -37,7 +40,7 @@ img {
 	margin: 0% 20% 2% 20%;
 	padding: 1% 0%;
 	transition: 1s easy-in;
-	border: 4px #815B5B;
+	border: 2px #FFF8EA5a;
 	border-style: solid;
 	border-radius: 12%;
 }
@@ -60,7 +63,7 @@ img {
 
 .current_page {
 	border-color: rgba(0, 200, 0, 0.5);
-	background-color: rgba(0, 189, 0, 0.1);
+	background-color: #fcfcfc20;
 }
 
 .content_header img {
@@ -69,6 +72,27 @@ img {
 
 article {
 	margin-top: 20px;
+}
+
+aside h3, aside h4 {
+	color: #1A120B;
+	text-decoration: underline;
+	text-decoration-color: #3C2A21;
+}
+
+aside h4:hover {
+	color: #A084CF;
+	text-decoration-color: #A084CF;
+}
+
+aside h3:hover {
+	color: #A084CF;
+	text-decoration-color: #A084CF;
+}
+
+nav h3, nav h4 {
+	display: inline-flex;
+	justify-content: start;
 }
 
 footer {
@@ -135,86 +159,80 @@ footer h2, .footer_links {
 	color: #fff8ea;
 }
 
-p, li {
-	font-size: 36px;
+section p, section li {
+	font-size: 32px;
 	font-family: arial, serif;
 }
 
-h2, h3, h4 {
-	font-size: 52px;
+section h2, section h3, section h4 {
+	font-size: 48px;
+	font-family: arial, serif;
 	text-align: center;
-	font-weight: bold;
-	margin-bottom: 10px;
-}
-
-h2 {
-	font-size: 64px;
 }
 
 h4 {
-	font-size: 48px;
+	font-size: 36px;
 }
 
-.container {
-	display: block;
-	margin: 5% 0%;
+.section_header {
+	font-size: 64px;
+	font-family: arial, serif;
 }
 
 /* START OF H2 ANIMATION FOR FOOTER */
 @keyframes lights {
   0% {
-    color: hsl(230, 40%, 80%);
+    color: hsl(163, 70%, 90%);
     text-shadow:
-      0 0 1em hsla(320, 100%, 50%, 0.2),
-      0 0 0.125em hsla(320, 100%, 60%, 0.3),
-      -1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
-      1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
+      0 0 1em hsla(27, 70%, 81%, 0.2),
+      0 0 0.125em hsla(27, 70%, 81%, 0.3),
+      -1em -0.125em 0.5em hsla(141, 70%, 74%, 0),
+      1em 0.125em 0.5em hsla(63, 70%, 86%, 0);
   }
   
   30% { 
-    color: hsl(230, 80%, 90%);
+    color: hsl(163, 70%, 80%);
     text-shadow:
-      0 0 1em hsla(320, 100%, 50%, 0.5),
-      0 0 0.125em hsla(320, 100%, 60%, 0.5),
-      -0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
-      0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+      0 0 1em hsla(27, 70%, 81%, 0.5),
+      0 0 0.125em hsla(27, 70%, 81%, 0.5),
+      -0.5em -0.125em 0.25em hsla(141, 70%, 74%, 0.2),
+      0.5em 0.125em 0.25em hsla(63, 70%, 86%, 0.4);
   }
   
   40% { 
-    color: hsl(230, 100%, 95%);
+    color: hsl(60, 70%, 70%);
     text-shadow:
-      0 0 1em hsla(320, 100%, 50%, 0.5),
-      0 0 0.125em hsla(320, 100%, 90%, 0.5),
-      -0.25em -0.125em 0.125em hsla(40, 100%, 60%, 0.2),
-      0.25em 0.125em 0.125em hsla(200, 100%, 60%, 0.4);
+      0 0 1em hsla(63, 70%, 86%, 0.5),
+      0 0 0.125em hsla(63, 70%, 86%, 0.5),
+      -0.25em -0.125em 0.125em hsla(141, 70%, 74%, 0.2),
+      0.25em 0.125em 0.125em hsla(63, 70%, 86%, 0.4);
   }
   
   70% {
-    color: hsl(230, 80%, 90%);
+    color: hsl(60, 70%, 80%);
     text-shadow:
-      0 0 1em hsla(320, 100%, 50%, 0.5),
-      0 0 0.125em hsla(320, 100%, 60%, 0.5),
-      0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
-      -0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+      0 0 1em hsla(27, 70%, 81%, 0.5),
+      0 0 0.125em hsla(27, 70%, 81%, 0.5),
+      0.5em -0.125em 0.25em hsla(141, 70%, 74%, 0.2),
+      -0.5em 0.125em 0.25em hsla(63, 70%, 86%, 0.4);
   }
   
   100% {
-    color: hsl(230, 40%, 80%);
+    color: hsl(65, 70%, 90%);
     text-shadow:
-      0 0 1em hsla(320, 100%, 50%, 0.2),
-      0 0 0.125em hsla(320, 100%, 60%, 0.3),
-      1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
+      0 0 1em hsla(63, 70%, 86%, 0.2),
+      0 0 0.125em hsla(63, 70%, 86%, 0.3),
+      1em -0.125em 0.5em hsla(141, 70%, 74%, 0),
       -1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
   }
-  
 }
 
 footer h2 {
 	font: 100% / 1.5 Raleway, sans-serif;
-	color: hsl(230, 100%, 95%);
+	color: #FFF8EA;
 	font-size: 36px;
 	font-weight: 300;
-	animation: lights 5s 750ms linear infinite;
+	animation: lights 10s 750ms linear infinite;
 }
 /* END OF H2 ANIMATION FOR FOOTER */
 
@@ -223,10 +241,9 @@ footer h2 {
 
 .content_header {
   font-family: "Cairo";
-  background-color: #676767fc;
-  background-image: url("../images/coffee.gif");
+  background-color: #59454500;
   background-size: 100% 100%;
-  background-blend-mode: multiply;
+  background-blend-mode: color-burn;
   text-align: center;
   color: #FFF;
   display: flex;
@@ -236,6 +253,7 @@ footer h2 {
   height: 30vh;
   letter-spacing: 1px;
   line-height:2;
+  width: 100%;
 
 }
 
@@ -249,10 +267,60 @@ footer h2 {
   text-transform: uppercase;
   font-size: 64px;
   margin: 10px 0;
-  text-shadow: 0 0 2px #12aac09a;
+  text-shadow: 0 0 2px #f2faf09a;
 }
 
 /* END OF CONTENT HEADER ANIMATION */
+
+/* START OF HEADER BACKGROUND ANIMATION LIKE WAVES */
+
+.waves {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background-color: var(--color);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+  transition: 500ms;
+}
+
+.waves::before,
+.waves::after {
+ 	content: ' '; 
+  display: block; 
+  position: absolute;
+  z-index: -1;
+  width: 300vw;
+  height: 300vw;
+  top: -65vw;
+  left: 50%;
+  transform: translate(-50%, -75%);
+}
+
+.waves::before {
+  border-radius: 44%;
+  background: #594545ca;
+  animation: waves 8s linear infinite;
+}
+
+.waves::after {
+  border-radius: 44%;
+  background: #5945457a;
+  animation: waves 15s linear infinite;
+}
+
+@keyframes waves {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+  
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+}
+
+/* END OF HEADER BACKGROUND ANIMATION LIKE WAVES */
 
 
 /* FOR TABLET VIEW */
@@ -338,34 +406,32 @@ footer h2 {
 		text-align: center;
 	}
 
-	p, li {
-		font-size: 36px;
+	section p, section li {
+		font-size: 32px;
 	}
 
-	h3, h4 {
-		font-size: 42px;
-		text-align: center;
-		font-weight: bold;
-		margin-bottom: 10px;
+	section h2, section h3, section h4 {
+		font-size: 48px;
 	}
 
 	h4 {
-		font-size: 38px;
+		font-size: 36px;
 	}
 }
+
 
 /* FOR LARGE VIEW */
 @media screen and (min-width: 1400px) {
 	.top_nav {
 		display: inline-flex;
 		justify-content: end;
-		padding: 2%;
+		padding: 0% 2%;
 	}
 
 	.top_nav li {
 		display: inline-block;
 		margin: 0% 2%;
-		padding: 2% 2%;
+		padding: 1% 2%;
 	}
 
 	.top_nav ul {
@@ -403,13 +469,20 @@ footer h2 {
 		margin-right: 10%;
 	}
 
-	.left_nav h1 {
+	.left_nav abbr {
 		text-decoration: none;
 	}
 
 	.right_nav {
-		display: inline-block;
-		width: 40%;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.right_nav ul {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.content_header img {
@@ -423,6 +496,7 @@ footer h2 {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin-top: 800px;
 	}
 
 	.left_footer {
@@ -438,7 +512,7 @@ footer h2 {
 	/* START OF ABBR ANIMATION FOR NAV BAR */
 	abbr {
 		display: inline-block;
-		color: #484848;
+		color: #FFF8EA;
 		font-size: 36px;
 		font-weight: bold;
 		font-family: monospace;
@@ -451,7 +525,7 @@ footer h2 {
 	}
 
 	abbr:hover span:nth-child(1) {
-	  margin-right: 5px;
+	  margin-right: 4px;
 	}
 
 	abbr:hover span:nth-child(1):after {
@@ -459,7 +533,7 @@ footer h2 {
 	}
 
 	abbr:hover span:nth-child(2) {
-	  margin-left: 30px;
+	  margin-left: 50px;
 	}
 
 	abbr:hover span:nth-child(2):after {
@@ -475,26 +549,35 @@ footer h2 {
 	/*made with ❤, by qpi65*/
 	/* END OF ABBR ANIMATION FOR NAV BAR */
 
-	p, li {
-		font-size: 24px;
-		font-family: arial, serif;
+	.main {
+		display: block;
+		width: 100vw;
+		height: 100vh;
+		margin: 0%;
 	}
 
-	h3, h4 {
-		font-size: 48px;
-		text-align: center;
-		font-weight: bold;
-		margin-bottom: 10px;
+	section {
+		display: block;
+		min-height: auto;
+		font-size: 24px;
+		padding: 2% 2% 25px;
+	}
+
+	section p, section li {
+		font-size: 24px;
+	}
+
+	section h2, section h3, section h4 {
+		font-size: 36px;
 	}
 
 	h4 {
-		font-size: 42px;
+		font-size: 32px;
 	}
 
-	.container {
-		margin: 2% 0%;
+	.section_header {
+		font-size: 52px;
 	}
-
 }
 
 svg {
