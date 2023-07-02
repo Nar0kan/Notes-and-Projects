@@ -347,8 +347,10 @@ footer h2 {
 
 	.top_nav img {
 		display: inline-block;
-		width: 25%;
-		height: 35%;
+		/*width: 25%;
+		height: 35%;*/
+		width: 50%;
+		height: auto;
 		padding: 2%;
 	}
 
@@ -465,7 +467,7 @@ footer h2 {
 
 	.top_nav img {
 		display: inline-block;
-		width: 20%;
+		width: 10%;
 		height: auto;
 		padding: 2%;
 		margin: 0 auto;
